@@ -31,10 +31,12 @@ export default function Footer() {
         {/* Left Side: Contact Form */}
         <div>
           <h2 className="text-3xl font-syne font-bold text-white mb-8">Send a message</h2>
-          <form className="flex flex-col gap-8">
+          <form action="https://formspree.io/f/mlgzqzvn" method="POST" className="flex flex-col gap-8">
             <div className="relative">
               <input 
                 type="text" 
+                name="name"
+                required
                 placeholder="Name" 
                 className="w-full bg-transparent border-b-2 border-white/10 py-3 text-white placeholder-[#94A3B8] focus:outline-none focus:border-[#00F5D4] transition-colors peer"
               />
@@ -42,19 +44,23 @@ export default function Footer() {
             <div className="relative">
               <input 
                 type="email" 
+                name="email"
+                required
                 placeholder="Email" 
                 className="w-full bg-transparent border-b-2 border-white/10 py-3 text-white placeholder-[#94A3B8] focus:outline-none focus:border-[#00F5D4] transition-colors peer"
               />
             </div>
             <div className="relative">
               <textarea 
+                name="message"
+                required
                 placeholder="Message" 
                 rows={3}
                 className="w-full bg-transparent border-b-2 border-white/10 py-3 text-white placeholder-[#94A3B8] focus:outline-none focus:border-[#00F5D4] transition-colors peer resize-none"
               />
             </div>
             <button 
-              type="button" 
+              type="submit" 
               className="w-fit text-sm font-bold uppercase tracking-widest text-[#0B0F12] bg-[#00F5D4] px-8 py-4 rounded hover:bg-white hover:scale-105 transition-all duration-300"
             >
               Submit
