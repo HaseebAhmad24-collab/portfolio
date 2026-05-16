@@ -2,9 +2,41 @@
 
 import { motion } from "framer-motion";
 import { portfolioData } from "@/data/portfolio";
+import { useState } from "react";
 
 export default function Footer() {
   const { contact } = portfolioData.personalInfo;
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus("loading");
+    
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch("https://formspree.io/f/mlgzqzvn", {
+        method: "POST",
+        body: formData,
+        headers: {
+          Accept: "application/json",
+        },
+      });
+
+      if (response.ok) {
+        setStatus("success");
+        form.reset();
+        setTimeout(() => setStatus("idle"), 4000);
+      } else {
+        setStatus("error");
+        setTimeout(() => setStatus("idle"), 4000);
+      }
+    } catch (error) {
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 4000);
+    }
+  };
 
   return (
     <footer id="contact" className="bg-[#0A0A0B] pt-32 pb-8 border-t border-white/5 overflow-hidden">
@@ -31,7 +63,7 @@ export default function Footer() {
         {/* Left Side: Contact Form */}
         <div>
           <h2 className="text-3xl font-syne font-bold text-white mb-8">Send a message</h2>
-          <form action="https://formspree.io/f/mlgzqzvn" method="POST" className="flex flex-col gap-8">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-8">
             <div className="relative">
               <input 
                 type="text" 
@@ -61,9 +93,10 @@ export default function Footer() {
             </div>
             <button 
               type="submit" 
-              className="w-fit text-sm font-bold uppercase tracking-widest text-[#0B0F12] bg-[#00F5D4] px-8 py-4 rounded hover:bg-white hover:scale-105 transition-all duration-300"
+              disabled={status === "loading" || status === "success"}
+              className="w-fit text-sm font-bold uppercase tracking-widest text-[#0B0F12] bg-[#00F5D4] px-8 py-4 rounded hover:bg-white hover:scale-105 transition-all duration-300 disabled:opacity-70 disabled:hover:scale-100 disabled:cursor-not-allowed"
             >
-              Submit
+              {status === "loading" ? "Sending..." : status === "success" ? "Message Sent!" : status === "error" ? "Failed! Try Again" : "Submit"}
             </button>
           </form>
         </div>
