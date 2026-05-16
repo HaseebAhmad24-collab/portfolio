@@ -132,7 +132,7 @@ export default function Footer() {
         <div className="flex gap-6 mt-4 md:mt-0">
           <a href={contact.github} className="hover:text-[#00F5D4] transition-colors uppercase tracking-widest text-xs">Github</a>
           <a href={contact.linkedin} className="hover:text-[#00F5D4] transition-colors uppercase tracking-widest text-xs">LinkedIn</a>
-          <a href={contact.twitter} className="hover:text-[#00F5D4] transition-colors uppercase tracking-widest text-xs">Twitter</a>
+          <a href={contact.upwork} className="hover:text-[#00F5D4] transition-colors uppercase tracking-widest text-xs">Upwork</a>
         </div>
       </div>
     </footer>

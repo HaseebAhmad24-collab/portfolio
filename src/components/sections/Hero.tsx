@@ -64,8 +64,8 @@ export default function Hero() {
             <a href={contact.linkedin} target="_blank" rel="noreferrer" className="text-[#94A3B8] hover:text-[#00F5D4] text-sm uppercase tracking-widest transition-colors">
               LinkedIn
             </a>
-            <a href={contact.twitter} target="_blank" rel="noreferrer" className="text-[#94A3B8] hover:text-[#00F5D4] text-sm uppercase tracking-widest transition-colors">
-              Twitter
+            <a href={contact.upwork} target="_blank" rel="noreferrer" className="text-[#94A3B8] hover:text-[#00F5D4] text-sm uppercase tracking-widest transition-colors">
+              Upwork
             </a>
           </div>
           

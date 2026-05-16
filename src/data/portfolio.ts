@@ -9,7 +9,7 @@ export const portfolioData = {
       phone: "+92 328-4461291",
       linkedin: "https://www.linkedin.com/in/haseeb-ahmad-5862162b8/",
       github: "https://github.com/HaseebAhmad24-collab",
-      twitter: "https://twitter.com", // Add your twitter link here
+      upwork: "https://www.upwork.com/freelancers/~01a7445e1d32cd572a",
       location: "Post Office Area, Raiwind, Lahore"
     }
   },
