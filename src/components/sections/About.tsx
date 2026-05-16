@@ -36,21 +36,30 @@ export default function About() {
             transition={{ duration: 0.6 }}
           >
             <h3 className="text-2xl font-syne font-bold mb-6 text-white uppercase tracking-widest">
-              Skills & Tech
+              Skills & Expertise
             </h3>
-            <div className="flex flex-wrap gap-3">
-              {skills.map((skill, index) => (
-                <motion.div
-                  key={skill}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: index * 0.05 }}
-                  className="px-5 py-2.5 border border-[#00F5D4]/30 rounded-full text-sm font-medium tracking-wide text-[#00F5D4] bg-[#00F5D4]/5 hover:bg-[#00F5D4]/20 transition-all cursor-default"
-                >
-                  {skill}
-                </motion.div>
-              ))}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+              {skills.map((skill, index) => {
+                // Create asymmetrical bento look by making some items span 2 columns
+                const isWide = index === 0 || index === 4 || index === 7;
+                return (
+                  <motion.div
+                    key={skill}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: index * 0.05 }}
+                    className={`relative overflow-hidden rounded-2xl bg-[#12181D] p-5 border border-white/5 hover:border-[#00F5D4]/30 group transition-all duration-300 flex items-center justify-center text-center shadow-lg hover:-translate-y-1 ${
+                      isWide ? "col-span-2 sm:col-span-2" : "col-span-1"
+                    }`}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#00F5D4]/0 to-[#00F5D4]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <span className="font-syne font-bold text-sm md:text-base text-white relative z-10 group-hover:text-[#00F5D4] transition-colors">
+                      {skill}
+                    </span>
+                  </motion.div>
+                );
+              })}
             </div>
           </motion.div>
         </div>
