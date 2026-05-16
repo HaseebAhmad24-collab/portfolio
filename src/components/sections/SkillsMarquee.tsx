@@ -15,11 +15,11 @@ const row2 = [
 ];
 
 const SkillBadge = ({ skill }: { skill: string }) => (
-  <div className="group flex items-center gap-4 px-8 py-2 mx-4 cursor-default">
-    <span className="text-[#00F5D4] font-mono text-sm opacity-30 group-hover:opacity-100 transition-opacity duration-300">
+  <div className="group flex items-center gap-3 px-6 py-2 mx-2 cursor-default">
+    <span className="text-[#00F5D4] font-mono text-xs opacity-30 group-hover:opacity-100 transition-opacity duration-300">
       //
     </span>
-    <span className="font-syne font-bold text-3xl md:text-4xl text-[#2A3441] group-hover:text-white transition-colors duration-300 tracking-wider uppercase">
+    <span className="font-syne font-bold text-xl md:text-2xl text-[#2A3441] group-hover:text-white transition-colors duration-300 tracking-wider uppercase">
       {skill}
     </span>
   </div>
@@ -27,7 +27,7 @@ const SkillBadge = ({ skill }: { skill: string }) => (
 
 export default function SkillsMarquee() {
   return (
-    <section className="py-20 bg-[#0B0F12] relative overflow-hidden flex flex-col gap-8 border-y border-white/5 my-12">
+    <section className="py-10 bg-[#0B0F12] relative overflow-hidden flex flex-col gap-4 border-y border-white/5 my-6">
       {/* Heavy gradient masks for cinematic fade */}
       <div className="absolute left-0 top-0 bottom-0 w-32 md:w-64 bg-gradient-to-r from-[#0B0F12] via-[#0B0F12]/80 to-transparent z-10 pointer-events-none" />
       <div className="absolute right-0 top-0 bottom-0 w-32 md:w-64 bg-gradient-to-l from-[#0B0F12] via-[#0B0F12]/80 to-transparent z-10 pointer-events-none" />
