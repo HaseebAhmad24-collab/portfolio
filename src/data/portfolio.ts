@@ -7,8 +7,8 @@ export const portfolioData = {
     contact: {
       email: "haseebahmad7473@gmail.com",
       phone: "+92 328-4461291",
-      linkedin: "https://linkedin.com/in/haseeb-ahmad",
-      github: "https://github.com", // Add your github link here
+      linkedin: "https://www.linkedin.com/in/haseeb-ahmad-5862162b8/",
+      github: "https://github.com/HaseebAhmad24-collab",
       twitter: "https://twitter.com", // Add your twitter link here
       location: "Post Office Area, Raiwind, Lahore"
     }
