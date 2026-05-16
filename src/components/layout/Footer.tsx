@@ -13,13 +13,18 @@ export default function Footer() {
     setStatus("loading");
     
     const form = e.currentTarget;
-    const formData = new FormData(form);
+    const data = {
+      name: (form.elements.namedItem("name") as HTMLInputElement).value,
+      email: (form.elements.namedItem("email") as HTMLInputElement).value,
+      message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
+    };
 
     try {
       const response = await fetch("https://formspree.io/f/mlgzqzvn", {
         method: "POST",
-        body: formData,
+        body: JSON.stringify(data),
         headers: {
+          "Content-Type": "application/json",
           Accept: "application/json",
         },
       });
