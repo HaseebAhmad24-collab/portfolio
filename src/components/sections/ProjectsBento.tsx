@@ -84,9 +84,17 @@ export default function ProjectsBento() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  // Inline markdown parser — handles badges, images, links, bold, italic, code
+  // Inline markdown parser — handles HTML tags, badges, images, links, bold, italic, code
   function parseInline(text: string, keyPrefix: string): React.ReactNode {
     let elementCounter = 0;
+
+    // Base RAW URL calculation for relative paths (e.g. images)
+    const repoUrl = activeReadme?.repoUrl || "";
+    let rawBaseUrl = "";
+    if (repoUrl) {
+      const cleanRepoUrl = repoUrl.trim().replace(/\/$/, "").replace(/\.git$/, "");
+      rawBaseUrl = cleanRepoUrl.replace("github.com", "raw.githubusercontent.com") + "/main/";
+    }
 
     function parseSegment(str: string): React.ReactNode[] {
       if (!str) return [];
@@ -95,6 +103,11 @@ export default function ProjectsBento() {
       const patterns = [
         { regex: /<img\s+[^>]*?src=["']([^"']+)["'][^>]*?\/?>/, type: "html-img" },
         { regex: /<br\s*\/?>/, type: "html-br" },
+        { regex: /<h1[^>]*>(.*?)<\/h1>/, type: "html-h1" },
+        { regex: /<h2[^>]*>(.*?)<\/h2>/, type: "html-h2" },
+        { regex: /<h3[^>]*>(.*?)<\/h3>/, type: "html-h3" },
+        { regex: /<p[^>]*>(.*?)<\/p>/, type: "html-p" },
+        { regex: /<strong[^>]*>(.*?)<\/strong>/, type: "html-strong" },
         { regex: /(\[!\[[^\]]*\]\([^)]+\)\]\([^)]+\))/, type: "linked-img" },
         { regex: /(!\[[^\]]*\]\([^)]+\))/, type: "md-img" },
         { regex: /(\[[^\]]+\]\([^)]+\))/, type: "md-link" },
@@ -135,19 +148,66 @@ export default function ProjectsBento() {
       if (earliestMatch.type === "html-img") {
         const altMatch = /alt=["']([^"']*)["']/.exec(matchedText);
         const altText = altMatch ? altMatch[1] : "image";
-        const srcUrl = earliestMatch.matchObj[1];
+        let srcUrl = earliestMatch.matchObj[1];
+        
+        // Convert relative URL to raw GitHub URL
+        if (srcUrl && !/^https?:\/\//i.test(srcUrl) && !/^data:/i.test(srcUrl) && rawBaseUrl) {
+          const cleanSrc = srcUrl.replace(/^\.\//, "").replace(/^\//, "");
+          srcUrl = rawBaseUrl + cleanSrc;
+        }
+
         parsedMatch = (
           <img 
             key={currentKey} 
             src={srcUrl} 
             alt={altText} 
-            className="inline h-5 rounded align-middle mr-1.5 mb-1.5" 
+            className="inline max-h-16 h-auto rounded align-middle mr-1.5 mb-1.5" 
           />
         );
       } 
       else if (earliestMatch.type === "html-br") {
         parsedMatch = <br key={currentKey} />;
       } 
+      else if (earliestMatch.type === "html-h1") {
+        const content = earliestMatch.matchObj[1];
+        parsedMatch = (
+          <h1 key={currentKey} className="text-xl md:text-2xl font-syne font-bold text-white mt-6 mb-3 border-b border-white/10 pb-2 w-full block">
+            {parseSegment(content)}
+          </h1>
+        );
+      }
+      else if (earliestMatch.type === "html-h2") {
+        const content = earliestMatch.matchObj[1];
+        parsedMatch = (
+          <h2 key={currentKey} className="text-lg md:text-xl font-syne font-bold text-white mt-5 mb-2 w-full block">
+            {parseSegment(content)}
+          </h2>
+        );
+      }
+      else if (earliestMatch.type === "html-h3") {
+        const content = earliestMatch.matchObj[1];
+        parsedMatch = (
+          <h3 key={currentKey} className="text-md md:text-lg font-syne font-bold text-white mt-4 mb-2 w-full block">
+            {parseSegment(content)}
+          </h3>
+        );
+      }
+      else if (earliestMatch.type === "html-p") {
+        const content = earliestMatch.matchObj[1];
+        parsedMatch = (
+          <span key={currentKey} className="text-[#94A3B8] text-sm leading-relaxed mb-3 block w-full">
+            {parseSegment(content)}
+          </span>
+        );
+      }
+      else if (earliestMatch.type === "html-strong") {
+        const content = earliestMatch.matchObj[1];
+        parsedMatch = (
+          <strong key={currentKey} className="text-white font-bold">
+            {parseSegment(content)}
+          </strong>
+        );
+      }
       else if (earliestMatch.type === "linked-img") {
         const m = matchedText.match(/^\[!\[([^\]]*)\]\(([^)]+)\)\]\(([^)]+)\)$/);
         if (m) {
@@ -161,8 +221,16 @@ export default function ProjectsBento() {
       else if (earliestMatch.type === "md-img") {
         const m = matchedText.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
         if (m) {
+          let srcUrl = m[2];
+          
+          // Convert relative URL to raw GitHub URL
+          if (srcUrl && !/^https?:\/\//i.test(srcUrl) && !/^data:/i.test(srcUrl) && rawBaseUrl) {
+            const cleanSrc = srcUrl.replace(/^\.\//, "").replace(/^\//, "");
+            srcUrl = rawBaseUrl + cleanSrc;
+          }
+
           parsedMatch = (
-            <img key={currentKey} src={m[2]} alt={m[1]} className="inline h-5 rounded align-middle mr-1.5 mb-1.5" />
+            <img key={currentKey} src={srcUrl} alt={m[1]} className="inline h-5 rounded align-middle mr-1.5 mb-1.5" />
           );
         }
       } 
