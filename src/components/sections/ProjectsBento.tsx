@@ -86,65 +86,125 @@ export default function ProjectsBento() {
 
   // Inline markdown parser — handles badges, images, links, bold, italic, code
   function parseInline(text: string, keyPrefix: string): React.ReactNode {
-    // Master regex: linked-image badges | plain images | links | bold | italic | inline code
-    const tokenRegex = /(\[!\[[^\]]*\]\([^)]+\)\]\([^)]+\))|(!\[[^\]]*\]\([^)]+\))|(\[[^\]]+\]\([^)]+\))|(\*\*[^*]+\*\*)|(\*[^*]+\*)|(`[^`]+`)/g;
-    const result: React.ReactNode[] = [];
-    let lastIndex = 0;
-    let match: RegExpExecArray | null;
+    let elementCounter = 0;
 
-    while ((match = tokenRegex.exec(text)) !== null) {
-      // Push plain text before match
-      if (match.index > lastIndex) {
-        result.push(<span key={`${keyPrefix}-t${lastIndex}`}>{text.slice(lastIndex, match.index)}</span>);
+    function parseSegment(str: string): React.ReactNode[] {
+      if (!str) return [];
+
+      // Find which pattern occurs first in the string to parse it recursively
+      const patterns = [
+        { regex: /<img\s+[^>]*src=["']([^"']+)["'][^>]*\/?>/, type: "html-img" },
+        { regex: /<br\s*\/?>/, type: "html-br" },
+        { regex: /(\[!\[[^\]]*\]\([^)]+\)\]\([^)]+\))/, type: "linked-img" },
+        { regex: /(!\[[^\]]*\]\([^)]+\))/, type: "md-img" },
+        { regex: /(\[[^\]]+\]\([^)]+\))/, type: "md-link" },
+        { regex: /(\*\*[^*]+\*\*)/, type: "bold" },
+        { regex: /(\*[^*]+\*)/, type: "italic" },
+        { regex: /(`[^`]+`)/, type: "code" }
+      ];
+
+      let earliestMatch: { index: number; length: number; matchObj: RegExpExecArray; type: string } | null = null;
+
+      for (const pattern of patterns) {
+        const m = pattern.regex.exec(str);
+        if (m) {
+          if (earliestMatch === null || m.index < earliestMatch.index) {
+            earliestMatch = {
+              index: m.index,
+              length: m[0].length,
+              matchObj: m,
+              type: pattern.type
+            };
+          }
+        }
       }
 
-      const token = match[0];
+      if (!earliestMatch) {
+        return [<span key={`${keyPrefix}-txt-${elementCounter++}`}>{str}</span>];
+      }
 
-      // [![alt](imgUrl)](linkUrl) — clickable badge
-      const linkedImg = token.match(/^\[!\[([^\]]*)\]\(([^)]+)\)\]\(([^)]+)\)$/);
-      if (linkedImg) {
-        result.push(
-          <a key={`${keyPrefix}-li${match.index}`} href={linkedImg[3]} target="_blank" rel="noreferrer" className="inline-block mr-1.5 mb-1.5 align-middle">
-            <img src={linkedImg[2]} alt={linkedImg[1]} className="inline h-5 rounded" />
-          </a>
+      const prefix = str.slice(0, earliestMatch.index);
+      const matchedText = earliestMatch.matchObj[0];
+      const suffix = str.slice(earliestMatch.index + earliestMatch.length);
+
+      const parsedPrefix = parseSegment(prefix);
+      let parsedMatch: React.ReactNode = null;
+
+      const currentKey = `${keyPrefix}-el-${elementCounter++}`;
+
+      if (earliestMatch.type === "html-img") {
+        const altMatch = /alt=["']([^"']*)["']/.exec(matchedText);
+        const altText = altMatch ? altMatch[1] : "image";
+        const srcUrl = earliestMatch.matchObj[1];
+        parsedMatch = (
+          <img 
+            key={currentKey} 
+            src={srcUrl} 
+            alt={altText} 
+            className="inline h-5 rounded align-middle mr-1.5 mb-1.5" 
+          />
+        );
+      } 
+      else if (earliestMatch.type === "html-br") {
+        parsedMatch = <br key={currentKey} />;
+      } 
+      else if (earliestMatch.type === "linked-img") {
+        const m = matchedText.match(/^\[!\[([^\]]*)\]\(([^)]+)\)\]\(([^)]+)\)$/);
+        if (m) {
+          parsedMatch = (
+            <a key={currentKey} href={m[3]} target="_blank" rel="noreferrer" className="inline-block mr-1.5 mb-1.5 align-middle">
+              <img src={m[2]} alt={m[1]} className="inline h-5 rounded" />
+            </a>
+          );
+        }
+      } 
+      else if (earliestMatch.type === "md-img") {
+        const m = matchedText.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
+        if (m) {
+          parsedMatch = (
+            <img key={currentKey} src={m[2]} alt={m[1]} className="inline h-5 rounded align-middle mr-1.5 mb-1.5" />
+          );
+        }
+      } 
+      else if (earliestMatch.type === "md-link") {
+        const m = matchedText.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+        if (m) {
+          parsedMatch = (
+            <a key={currentKey} href={m[2]} target="_blank" rel="noreferrer" className="text-[#00F5D4] hover:underline underline-offset-2">
+              {parseSegment(m[1])}
+            </a>
+          );
+        }
+      } 
+      else if (earliestMatch.type === "bold") {
+        const content = matchedText.slice(2, -2);
+        parsedMatch = (
+          <strong key={currentKey} className="text-white font-bold">
+            {parseSegment(content)}
+          </strong>
+        );
+      } 
+      else if (earliestMatch.type === "italic") {
+        const content = matchedText.slice(1, -1);
+        parsedMatch = (
+          <em key={currentKey} className="italic text-[#94A3B8]">
+            {parseSegment(content)}
+          </em>
+        );
+      } 
+      else if (earliestMatch.type === "code") {
+        const content = matchedText.slice(1, -1);
+        parsedMatch = (
+          <code key={currentKey} className="bg-black/50 px-1.5 py-0.5 rounded text-[#00F5D4] text-xs font-mono">
+            {content}
+          </code>
         );
       }
-      // ![alt](url) — plain image
-      else if (token.startsWith("![")) {
-        const img = token.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
-        if (img) {
-          result.push(<img key={`${keyPrefix}-img${match.index}`} src={img[2]} alt={img[1]} className="inline h-5 rounded align-middle mr-1 mb-1" />);
-        }
-      }
-      // [text](url) — link
-      else if (token.startsWith("[")) {
-        const lnk = token.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
-        if (lnk) {
-          result.push(<a key={`${keyPrefix}-a${match.index}`} href={lnk[2]} target="_blank" rel="noreferrer" className="text-[#00F5D4] hover:underline underline-offset-2">{lnk[1]}</a>);
-        }
-      }
-      // **bold**
-      else if (token.startsWith("**")) {
-        result.push(<strong key={`${keyPrefix}-b${match.index}`} className="text-white font-bold">{token.slice(2, -2)}</strong>);
-      }
-      // *italic*
-      else if (token.startsWith("*")) {
-        result.push(<em key={`${keyPrefix}-i${match.index}`} className="italic text-[#94A3B8]">{token.slice(1, -1)}</em>);
-      }
-      // `inline code`
-      else if (token.startsWith("`")) {
-        result.push(<code key={`${keyPrefix}-c${match.index}`} className="bg-black/50 px-1.5 py-0.5 rounded text-[#00F5D4] text-xs font-mono">{token.slice(1, -1)}</code>);
-      }
 
-      lastIndex = match.index + token.length;
+      return [...parsedPrefix, parsedMatch, ...parseSegment(suffix)];
     }
 
-    // Push remaining plain text
-    if (lastIndex < text.length) {
-      result.push(<span key={`${keyPrefix}-tail`}>{text.slice(lastIndex)}</span>);
-    }
-
-    return <>{result}</>;
+    return <>{parseSegment(text)}</>;
   }
 
   // Full GitHub-style Markdown renderer
