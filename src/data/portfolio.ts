@@ -3,7 +3,7 @@ export const portfolioData = {
     name: "Haseeb Ahmad",
     title: "Aspiring AI Engineer",
     signature: "Digital Alchemist",
-    bio: "AI Developer (Intern) | I am a dedicated student and an aspiring AI Engineer, currently in my learning phase and passionate about exploring how AI can solve real-world problems. My journey so far has been about building and learning — from experimenting with Inventory Prediction and AI Assistants in my AI-BOS project to exploring RAG systems with JusticeBridge. While I have experience building full-stack systems like a Telecom Billing platform, I am eager to learn professional workflows and best practices in an AI-focused internship.",
+    bio: "I'm Haseeb Ahmad — a Full Stack AI Developer who transforms ideas into production-ready, AI-powered products that actually ship. While most are still learning the basics, I'm Dockerizing applications, automating deployments with CI/CD pipelines, and pushing complete systems to AWS. I don't just integrate AI as a feature — I architect around it. From building agentic RAG systems that navigate complex legal datasets, to SaaS platforms with intelligent automation baked in from day one. My stack goes deep: full-stack development, cloud infrastructure, DevOps pipelines, vector databases, and LLM-powered backends — all connected, all production-ready. I'm not waiting to graduate to start building. I'm already shipping.",
     contact: {
       email: "haseebahmad7473@gmail.com",
       phone: "+92 328-4461291",
