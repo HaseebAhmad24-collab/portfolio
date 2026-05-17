@@ -13,20 +13,6 @@ export interface ProjectConfig {
 export const projectsConfig: ProjectConfig[] = [
   {
     id: "01",
-    category: "AI & RAG SYSTEM",
-    repoUrl: "https://github.com/HaseebAhmad24-collab/JusticeBridge",
-    liveUrl: "https://justicebridge.vercel.app",
-    gifUrl: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3V2dG1hOTRpM2s4OHkyOTB2NXoxZ3Iwa3pvODN4Z285MXd2MWZoaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/a0h7sAqON67nO/giphy.gif", // Fallback looping gif if local is missing
-    images: [
-      "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80", // Legal gavel premium image
-      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80"
-    ],
-    techStack: ["Python", "Gemini API", "FastAPI", "Vector DB", "TypeScript"],
-    fallbackTitle: "JusticeBridge",
-    fallbackDescription: "AI-powered legal workspace combining RAG-based chat, smart document library, and text-to-speech legal assistance."
-  },
-  {
-    id: "02",
     category: "AI INFRASTRUCTURE",
     repoUrl: "https://github.com/HaseebAhmad24-collab/AI-BusinessOperatingSystem",
     liveUrl: "https://3yxe9nysd2.us-east-1.awsapprunner.com/",
@@ -38,6 +24,20 @@ export const projectsConfig: ProjectConfig[] = [
     techStack: ["Next.js 14", "TypeScript", "Tailwind CSS", "Framer Motion"],
     fallbackTitle: "AI-BOS",
     fallbackDescription: "A high-performance operating system interface for artificial intelligence services, featuring glassmorphism micro-apps."
+  },
+  {
+    id: "02",
+    category: "AI & RAG SYSTEM",
+    repoUrl: "https://github.com/HaseebAhmad24-collab/JusticeBridge",
+    liveUrl: "https://justicebridge.vercel.app",
+    gifUrl: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3V2dG1hOTRpM2s4OHkyOTB2NXoxZ3Iwa3pvODN4Z285MXd2MWZoaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/a0h7sAqON67nO/giphy.gif", // Fallback looping gif if local is missing
+    images: [
+      "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80", // Legal gavel premium image
+      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80"
+    ],
+    techStack: ["Python", "Gemini API", "FastAPI", "Vector DB", "TypeScript"],
+    fallbackTitle: "JusticeBridge",
+    fallbackDescription: "AI-powered legal workspace combining RAG-based chat, smart document library, and text-to-speech legal assistance."
   },
   {
     id: "03",
