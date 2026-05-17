@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { ArrowUpRight, ExternalLink, FileText, X, ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { projectsConfig, ProjectConfig } from "@/data/projects";
 import { fetchRepoData, GitHubRepoData } from "@/lib/github";
+import MermaidDiagram from "@/components/ui/MermaidDiagram";
 
 interface ProjectState extends ProjectConfig {
   title: string;
@@ -153,6 +154,7 @@ export default function ProjectsBento() {
     if (!text) return null;
     const lines = text.split("\n");
     let inCodeBlock = false;
+    let codeLang = "";
     let codeLines: string[] = [];
     const output: React.ReactNode[] = [];
 
@@ -163,14 +165,20 @@ export default function ProjectsBento() {
       if (trimmed.startsWith("```")) {
         if (!inCodeBlock) {
           inCodeBlock = true;
+          codeLang = trimmed.slice(3).trim().toLowerCase();
           codeLines = [];
         } else {
           inCodeBlock = false;
-          output.push(
-            <pre key={`cb-${idx}`} className="bg-black/80 p-4 rounded-xl font-mono text-xs text-[#00F5D4] my-3 overflow-x-auto border border-white/5 shadow-inner leading-relaxed">
-              <code>{codeLines.join("\n")}</code>
-            </pre>
-          );
+          if (codeLang === "mermaid") {
+            output.push(<MermaidDiagram key={`mermaid-${idx}`} code={codeLines.join("\n")} />);
+          } else {
+            output.push(
+              <pre key={`cb-${idx}`} className="bg-black/80 p-4 rounded-xl font-mono text-xs text-[#00F5D4] my-3 overflow-x-auto border border-white/5 shadow-inner leading-relaxed">
+                <code>{codeLines.join("\n")}</code>
+              </pre>
+            );
+          }
+          codeLang = "";
         }
         return;
       }
