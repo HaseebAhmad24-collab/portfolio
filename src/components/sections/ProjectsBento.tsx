@@ -157,24 +157,53 @@ export default function ProjectsBento() {
     let codeLang = "";
     let codeLines: string[] = [];
     let isCentered = false;
+    let currentParagraphLines: string[] = [];
     const output: React.ReactNode[] = [];
+
+    const flushParagraph = (keyPrefix: string) => {
+      if (currentParagraphLines.length === 0) return;
+      
+      const content = currentParagraphLines.map((l, i) => (
+        <span key={`${keyPrefix}-pl-${i}`} className="inline-block mr-1.5 mb-1.5 align-middle">
+          {parseInline(l, `${keyPrefix}-pl-${i}`)}
+        </span>
+      ));
+
+      if (isCentered) {
+        output.push(
+          <div key={`${keyPrefix}-para`} className="text-center flex flex-wrap justify-center items-center gap-1.5 w-full my-2">
+            {content}
+          </div>
+        );
+      } else {
+        output.push(
+          <p key={`${keyPrefix}-para`} className="text-[#94A3B8] text-sm leading-relaxed mb-3 flex flex-wrap items-center">
+            {content}
+          </p>
+        );
+      }
+      currentParagraphLines = [];
+    };
 
     lines.forEach((line, idx) => {
       const trimmed = line.trim();
 
-      // HTML center tag detection
+      // HTML center tag detection (Structural block)
       if (trimmed.startsWith('<div align="center">') || trimmed.startsWith('<div align=\'center\'>')) {
+        flushParagraph(`align-start-${idx}`);
         isCentered = true;
         return;
       }
       if (trimmed.startsWith('</div>')) {
+        flushParagraph(`align-end-${idx}`);
         isCentered = false;
         return;
       }
 
-      // Code block toggle
+      // Code block toggle (Structural block)
       if (trimmed.startsWith("```")) {
         if (!inCodeBlock) {
+          flushParagraph(`cb-start-${idx}`);
           inCodeBlock = true;
           codeLang = trimmed.slice(3).trim().toLowerCase();
           codeLines = [];
@@ -199,77 +228,72 @@ export default function ProjectsBento() {
         return;
       }
 
-      // Horizontal rule
+      // Horizontal rule (Structural block)
       if (/^(-{3,}|\*{3,}|_{3,})$/.test(trimmed)) {
+        flushParagraph(`hr-${idx}`);
         output.push(<hr key={`hr-${idx}`} className="border-white/10 my-4" />);
         return;
       }
 
-      // Headings
+      // Headings (Structural block)
       if (trimmed.startsWith("# ")) {
+        flushParagraph(`h1-${idx}`);
         const headingClass = `text-xl md:text-2xl font-syne font-bold text-white mt-8 mb-3 border-b border-white/10 pb-2 ${isCentered ? "text-center w-full" : ""}`;
         output.push(<h1 key={`h1-${idx}`} className={headingClass}>{parseInline(trimmed.slice(2), `h1-${idx}`)}</h1>);
         return;
       }
       if (trimmed.startsWith("## ")) {
+        flushParagraph(`h2-${idx}`);
         const headingClass = `text-lg font-syne font-bold text-white mt-6 mb-2 border-b border-white/5 pb-1 ${isCentered ? "text-center w-full" : ""}`;
         output.push(<h2 key={`h2-${idx}`} className={headingClass}>{parseInline(trimmed.slice(3), `h2-${idx}`)}</h2>);
         return;
       }
       if (trimmed.startsWith("### ")) {
+        flushParagraph(`h3-${idx}`);
         const headingClass = `text-base font-syne font-semibold text-[#00F5D4] mt-5 mb-2 ${isCentered ? "text-center w-full" : ""}`;
         output.push(<h3 key={`h3-${idx}`} className={headingClass}>{parseInline(trimmed.slice(4), `h3-${idx}`)}</h3>);
         return;
       }
       if (trimmed.startsWith("#### ")) {
+        flushParagraph(`h4-${idx}`);
         const headingClass = `text-sm font-syne font-semibold text-white/80 mt-4 mb-1 ${isCentered ? "text-center w-full" : ""}`;
         output.push(<h4 key={`h4-${idx}`} className={headingClass}>{parseInline(trimmed.slice(5), `h4-${idx}`)}</h4>);
         return;
       }
 
-      // List items
+      // List items (Structural block)
       if (trimmed.startsWith("- ") || trimmed.startsWith("* ")) {
+        flushParagraph(`li-${idx}`);
         output.push(<li key={`li-${idx}`} className="text-[#94A3B8] text-sm ml-5 list-disc mb-1.5">{parseInline(trimmed.slice(2), `li-${idx}`)}</li>);
         return;
       }
       if (/^\d+\. /.test(trimmed)) {
+        flushParagraph(`oli-${idx}`);
         const content = trimmed.replace(/^\d+\. /, "");
         output.push(<li key={`oli-${idx}`} className="text-[#94A3B8] text-sm ml-5 list-decimal mb-1.5">{parseInline(content, `oli-${idx}`)}</li>);
         return;
       }
 
-      // Blockquote
+      // Blockquote (Structural block)
       if (trimmed.startsWith("> ")) {
+        flushParagraph(`bq-${idx}`);
         output.push(<blockquote key={`bq-${idx}`} className="border-l-4 border-[#00F5D4] bg-white/5 px-4 py-2 my-3 text-sm text-[#94A3B8] italic rounded-r-lg">{parseInline(trimmed.slice(2), `bq-${idx}`)}</blockquote>);
         return;
       }
 
-      // Empty line
+      // Empty line (Structural block)
       if (trimmed === "") {
+        flushParagraph(`sp-${idx}`);
         output.push(<div key={`sp-${idx}`} className="h-2" />);
         return;
       }
 
-      // Paragraph — inline parse handles badges/images/links
-      if (isCentered) {
-        const isInlineContent = trimmed.startsWith("![") || trimmed.startsWith("[") || trimmed.includes("badge") || trimmed.includes("shields.io");
-        if (isInlineContent) {
-          output.push(
-            <div key={`p-${idx}`} className="text-center inline-flex justify-center items-center gap-1.5 mx-1 my-0.5">
-              {parseInline(line, `p-${idx}`)}
-            </div>
-          );
-        } else {
-          output.push(
-            <p key={`p-${idx}`} className="text-center text-[#94A3B8] text-sm leading-relaxed mb-2 w-full">
-              {parseInline(line, `p-${idx}`)}
-            </p>
-          );
-        }
-      } else {
-        output.push(<p key={`p-${idx}`} className="text-[#94A3B8] text-sm leading-relaxed mb-2">{parseInline(line, `p-${idx}`)}</p>);
-      }
+      // Accumulate standard paragraph lines
+      currentParagraphLines.push(line);
     });
+
+    // Final flush of remaining paragraph text
+    flushParagraph("final");
 
     return output;
   }
