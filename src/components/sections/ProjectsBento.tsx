@@ -619,10 +619,10 @@ export default function ProjectsBento() {
               exit={{ scale: 0.96, opacity: 0, y: 15 }}
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
               onClick={(e) => e.stopPropagation()}
-              className="relative max-w-4xl w-full bg-[#0F1318]/95 border border-white/10 rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row h-auto md:h-[65vh] max-h-[90vh]"
+              className="relative max-w-5xl w-full bg-[#0F1318]/95 border border-white/10 rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row h-auto md:h-[65vh] lg:h-[70vh] max-h-[90vh]"
             >
               {/* Media Section (Left/Top) */}
-              <div className="w-full md:w-3/5 h-[240px] sm:h-[300px] md:h-full bg-black/60 relative flex flex-col justify-between p-4 border-b md:border-b-0 md:border-r border-white/5">
+              <div className="w-full md:w-[65%] h-[240px] sm:h-[300px] md:h-full bg-black/60 relative flex flex-col justify-between p-4 border-b md:border-b-0 md:border-r border-white/5">
                 {/* Media Selector Tabs */}
                 <div className="flex gap-2 relative z-10">
                   <button
@@ -657,7 +657,7 @@ export default function ProjectsBento() {
                       <img 
                         src={activeLightbox.gifUrl} 
                         alt="Project Demo GIF" 
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-contain"
                       />
                     </div>
                   ) : (
@@ -665,7 +665,7 @@ export default function ProjectsBento() {
                       <img 
                         src={activeLightbox.images[currentImageIndex]} 
                         alt={`Screenshot ${currentImageIndex + 1}`} 
-                        className="w-full h-full object-cover rounded-xl border border-white/10 shadow-lg"
+                        className="w-full h-full object-contain rounded-xl border border-white/10 shadow-lg"
                       />
 
                       {/* Navigation Controls */}
@@ -699,7 +699,7 @@ export default function ProjectsBento() {
               </div>
 
               {/* Dynamic Info Panel (Right/Bottom) */}
-              <div className="w-full md:w-2/5 h-auto md:h-full p-6 md:p-8 flex flex-col justify-between overflow-y-auto bg-[#0A0D10]/95">
+              <div className="w-full md:w-[35%] h-auto md:h-full p-6 md:p-8 flex flex-col justify-between overflow-y-auto bg-[#0A0D10]/95">
                 <div className="flex flex-col gap-4">
                   {/* Category & Title */}
                   <div className="flex justify-between items-start">
