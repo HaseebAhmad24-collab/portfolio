@@ -370,12 +370,10 @@ export default function ProjectsBento() {
           /* Custom Premium Bento Grid Console */
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {projects.map((project, index) => {
-              const moduloIndex = index % 3;
-              const bentoClasses = moduloIndex === 0 
+              const moduloIndex = index % 4;
+              const bentoClasses = moduloIndex === 0 || moduloIndex === 3
                 ? "md:col-span-2 md:row-span-1 min-h-[360px]"
-                : moduloIndex === 1 
-                  ? "md:col-span-1 md:row-span-2 min-h-[500px] md:min-h-0"
-                  : "md:col-span-2 md:row-span-1 min-h-[360px]";
+                : "md:col-span-1 md:row-span-1 min-h-[360px]";
 
               return (
                 <motion.div

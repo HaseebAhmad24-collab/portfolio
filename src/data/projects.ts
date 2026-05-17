@@ -66,35 +66,5 @@ export const projectsConfig: ProjectConfig[] = [
     techStack: ["Docker", "Kubernetes", "Jenkins", "AWS EC2", "TypeScript"],
     fallbackTitle: "DevOps & Full-Stack",
     fallbackDescription: "Enterprise-grade CI/CD automation pipeline configured with Docker, Jenkins, SonarQube, and AWS cloud deployment."
-  },
-  {
-    id: "05",
-    category: "DEVOPS & INTEGRATION",
-    repoUrl: "https://github.com/HaseebAhmad24-collab/devops-fullstack",
-    liveUrl: "https://devops-fullstack.vercel.app",
-    gifUrl: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3V2dG1hOTRpM2s4OHkyOTB2NXoxZ3Iwa3pvODN4Z285MXd2MWZoaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/a0h7sAqON67nO/giphy.gif",
-    images: [
-      "https://images.unsplash.com/photo-1607799279861-4dd421887fb3?auto=format&fit=crop&w=800&q=80", // Tech code terminal
-      "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80"
-    ],
-    techStack: ["Docker", "Kubernetes", "Jenkins", "AWS EC2", "TypeScript"],
-    fallbackTitle: "DevOps & Full-Stack",
-    fallbackDescription: "Enterprise-grade CI/CD automation pipeline configured with Docker, Jenkins, SonarQube, and AWS cloud deployment."
-  },
-  {
-    id: "06",
-    category: "DEVOPS & INTEGRATION",
-    repoUrl: "https://github.com/HaseebAhmad24-collab/devops-fullstack",
-    liveUrl: "https://devops-fullstack.vercel.app",
-    gifUrl: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3V2dG1hOTRpM2s4OHkyOTB2NXoxZ3Iwa3pvODN4Z285MXd2MWZoaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/a0h7sAqON67nO/giphy.gif",
-    images: [
-      "https://images.unsplash.com/photo-1607799279861-4dd421887fb3?auto=format&fit=crop&w=800&q=80", // Tech code terminal
-      "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80"
-    ],
-    techStack: ["Docker", "Kubernetes", "Jenkins", "AWS EC2", "TypeScript"],
-    fallbackTitle: "DevOps & Full-Stack",
-    fallbackDescription: "Enterprise-grade CI/CD automation pipeline configured with Docker, Jenkins, SonarQube, and AWS cloud deployment."
   }
-
-
 ];
