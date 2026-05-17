@@ -370,9 +370,10 @@ export default function ProjectsBento() {
           /* Custom Premium Bento Grid Console */
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {projects.map((project, index) => {
-              const bentoClasses = index === 0 
+              const moduloIndex = index % 3;
+              const bentoClasses = moduloIndex === 0 
                 ? "md:col-span-2 md:row-span-1 min-h-[360px]"
-                : index === 1 
+                : moduloIndex === 1 
                   ? "md:col-span-1 md:row-span-2 min-h-[500px] md:min-h-0"
                   : "md:col-span-2 md:row-span-1 min-h-[360px]";
 
@@ -403,7 +404,7 @@ export default function ProjectsBento() {
                   {/* Console Header */}
                   <div className="flex justify-between items-center mb-6 relative z-10">
                     <span className="font-mono text-xs text-white/20 group-hover:text-[#00F5D4]/40 transition-colors select-none tracking-widest font-semibold">
-                      [SYS_LOC: 0{index + 1}_PRJ]
+                      [SYS_LOC: {index + 1 < 10 ? `0${index + 1}` : index + 1}_PRJ]
                     </span>
                     <div className="p-2.5 rounded-xl bg-white/5 border border-white/5 group-hover:bg-[#00F5D4]/10 group-hover:border-[#00F5D4]/30 transition-all">
                       <ArrowUpRight className="w-4 h-4 text-white/60 group-hover:text-[#00F5D4] transition-colors" />
