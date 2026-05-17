@@ -512,6 +512,7 @@ export default function ProjectsBento() {
                     setActiveLightbox(project);
                     setCurrentImageIndex(0);
                   }}
+                  data-hover-gallery="true"
                   className={`group relative rounded-2xl bg-[#0F1318]/90 backdrop-blur-md p-6 md:p-8 overflow-hidden transition-all duration-300 border border-white/5 hover:border-[#00F5D4]/40 shadow-2xl flex flex-col justify-between cursor-pointer ${bentoClasses}`}
                 >
                   {/* Neon Grid Backing Pattern Reveal on Hover */}
