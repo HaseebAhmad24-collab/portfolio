@@ -16,14 +16,14 @@ export const projectsConfig: ProjectConfig[] = [
     category: "AI INFRASTRUCTURE",
     repoUrl: "https://github.com/HaseebAhmad24-collab/AI-BusinessOperatingSystem",
     liveUrl: "https://3yxe9nysd2.us-east-1.awsapprunner.com/",
-    gifUrl: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z2dG1hOTRpM2s4OHkyOTB2NXoxZ3Iwa3pvODN4Z285MXd2MWZoaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/a0h7sAqON67nO/giphy.gif",
+    gifUrl: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3V2dG1hOTRpM2s4OHkyOTB2NXoxZ3Iwa3pvODN4Z285MXd2MWZoaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/a0h7sAqON67nO/giphy.gif",
     images: [
       "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80", // Futuristic abstract mesh
       "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=800&q=80"
     ],
     techStack: ["Next.js 14", "TypeScript", "Tailwind CSS", "Framer Motion"],
-    fallbackTitle: "AI-BOS",
-    fallbackDescription: "A high-performance operating system interface for artificial intelligence services, featuring glassmorphism micro-apps."
+    fallbackTitle: "AI-BusinessOperatingSystem",
+    fallbackDescription: "Developed a full-stack system featuring Future Inventory Prediction models. Integrated an AI Assistant to automate customer support and business workflows."
   },
   {
     id: "02",
@@ -37,7 +37,7 @@ export const projectsConfig: ProjectConfig[] = [
     ],
     techStack: ["Python", "Gemini API", "FastAPI", "Vector DB", "TypeScript"],
     fallbackTitle: "JusticeBridge",
-    fallbackDescription: "AI-powered legal workspace combining RAG-based chat, smart document library, and text-to-speech legal assistance."
+    fallbackDescription: "Currently building an agentic RAG system for Pakistani & Religious Law using Python & Gemini API. Implementing semantic search to retrieve accurate context from complex legal datasets."
   },
   {
     id: "03",
@@ -50,8 +50,8 @@ export const projectsConfig: ProjectConfig[] = [
       "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80"
     ],
     techStack: ["React", "Node.js", "MySQL", "Docker", "MIT", "TailwindCSS"],
-    fallbackTitle: "DevOps & Full-Stack",
-    fallbackDescription: "Enterprise-grade CI/CD automation pipeline configured with Docker, Jenkins, SonarQube, and AWS cloud deployment."
+    fallbackTitle: "TelecomBillingSystem",
+    fallbackDescription: "An Enterprise-Grade Telecom Billing & Customer Management Suite featuring robust backend billing calculations, user management, and automated invoicing."
   },
   {
     id: "04",
@@ -64,7 +64,7 @@ export const projectsConfig: ProjectConfig[] = [
       "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80"
     ],
     techStack: ["Docker", "Kubernetes", "Jenkins", "AWS EC2", "TypeScript"],
-    fallbackTitle: "DevOps & Full-Stack",
-    fallbackDescription: "Enterprise-grade CI/CD automation pipeline configured with Docker, Jenkins, SonarQube, and AWS cloud deployment."
+    fallbackTitle: "ReadMeAi",
+    fallbackDescription: "An AI-powered SaaS platform that scans your GitHub repositories and generates professional, structured README files — ready to push in one click."
   }
 ];
