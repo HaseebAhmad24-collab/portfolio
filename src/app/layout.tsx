@@ -28,8 +28,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${syne.variable}`}>
-      <body className="antialiased selection:bg-[#00F5D4] selection:text-black min-h-screen flex flex-col">
+    <html lang="en" className={`${inter.variable} ${syne.variable}`} suppressHydrationWarning>
+      <body className="antialiased selection:bg-[#00F5D4] selection:text-black min-h-screen flex flex-col" suppressHydrationWarning>
         <main className="flex-grow">
           {children}
         </main>
