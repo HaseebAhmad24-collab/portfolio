@@ -85,51 +85,155 @@ export default function ProjectsBento() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  // Simple Markdown parser for modal
+  // Inline markdown parser — handles badges, images, links, bold, italic, code
+  function parseInline(text: string, keyPrefix: string): React.ReactNode {
+    // Master regex: linked-image badges | plain images | links | bold | italic | inline code
+    const tokenRegex = /(\[!\[[^\]]*\]\([^)]+\)\]\([^)]+\))|(!\[[^\]]*\]\([^)]+\))|(\[[^\]]+\]\([^)]+\))|(\*\*[^*]+\*\*)|(\*[^*]+\*)|(`[^`]+`)/g;
+    const result: React.ReactNode[] = [];
+    let lastIndex = 0;
+    let match: RegExpExecArray | null;
+
+    while ((match = tokenRegex.exec(text)) !== null) {
+      // Push plain text before match
+      if (match.index > lastIndex) {
+        result.push(<span key={`${keyPrefix}-t${lastIndex}`}>{text.slice(lastIndex, match.index)}</span>);
+      }
+
+      const token = match[0];
+
+      // [![alt](imgUrl)](linkUrl) — clickable badge
+      const linkedImg = token.match(/^\[!\[([^\]]*)\]\(([^)]+)\)\]\(([^)]+)\)$/);
+      if (linkedImg) {
+        result.push(
+          <a key={`${keyPrefix}-li${match.index}`} href={linkedImg[3]} target="_blank" rel="noreferrer" className="inline-block mr-1.5 mb-1.5 align-middle">
+            <img src={linkedImg[2]} alt={linkedImg[1]} className="inline h-5 rounded" />
+          </a>
+        );
+      }
+      // ![alt](url) — plain image
+      else if (token.startsWith("![")) {
+        const img = token.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
+        if (img) {
+          result.push(<img key={`${keyPrefix}-img${match.index}`} src={img[2]} alt={img[1]} className="inline h-5 rounded align-middle mr-1 mb-1" />);
+        }
+      }
+      // [text](url) — link
+      else if (token.startsWith("[")) {
+        const lnk = token.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+        if (lnk) {
+          result.push(<a key={`${keyPrefix}-a${match.index}`} href={lnk[2]} target="_blank" rel="noreferrer" className="text-[#00F5D4] hover:underline underline-offset-2">{lnk[1]}</a>);
+        }
+      }
+      // **bold**
+      else if (token.startsWith("**")) {
+        result.push(<strong key={`${keyPrefix}-b${match.index}`} className="text-white font-bold">{token.slice(2, -2)}</strong>);
+      }
+      // *italic*
+      else if (token.startsWith("*")) {
+        result.push(<em key={`${keyPrefix}-i${match.index}`} className="italic text-[#94A3B8]">{token.slice(1, -1)}</em>);
+      }
+      // `inline code`
+      else if (token.startsWith("`")) {
+        result.push(<code key={`${keyPrefix}-c${match.index}`} className="bg-black/50 px-1.5 py-0.5 rounded text-[#00F5D4] text-xs font-mono">{token.slice(1, -1)}</code>);
+      }
+
+      lastIndex = match.index + token.length;
+    }
+
+    // Push remaining plain text
+    if (lastIndex < text.length) {
+      result.push(<span key={`${keyPrefix}-tail`}>{text.slice(lastIndex)}</span>);
+    }
+
+    return <>{result}</>;
+  }
+
+  // Full GitHub-style Markdown renderer
   function renderReadmeMarkdown(text: string) {
     if (!text) return null;
     const lines = text.split("\n");
     let inCodeBlock = false;
+    let codeLines: string[] = [];
+    const output: React.ReactNode[] = [];
 
-    return lines.map((line, idx) => {
+    lines.forEach((line, idx) => {
       const trimmed = line.trim();
-      
+
+      // Code block toggle
       if (trimmed.startsWith("```")) {
-        inCodeBlock = !inCodeBlock;
-        return null;
+        if (!inCodeBlock) {
+          inCodeBlock = true;
+          codeLines = [];
+        } else {
+          inCodeBlock = false;
+          output.push(
+            <pre key={`cb-${idx}`} className="bg-black/80 p-4 rounded-xl font-mono text-xs text-[#00F5D4] my-3 overflow-x-auto border border-white/5 shadow-inner leading-relaxed">
+              <code>{codeLines.join("\n")}</code>
+            </pre>
+          );
+        }
+        return;
       }
 
       if (inCodeBlock) {
-        return (
-          <pre key={idx} className="bg-black/80 p-4 rounded-xl font-mono text-xs text-[#00F5D4] my-3 overflow-x-auto border border-white/5 shadow-inner">
-            <code>{line}</code>
-          </pre>
-        );
+        codeLines.push(line);
+        return;
       }
 
+      // Horizontal rule
+      if (/^(-{3,}|\*{3,}|_{3,})$/.test(trimmed)) {
+        output.push(<hr key={`hr-${idx}`} className="border-white/10 my-4" />);
+        return;
+      }
+
+      // Headings
       if (trimmed.startsWith("# ")) {
-        return <h1 key={idx} className="text-xl md:text-2xl font-syne font-black text-white mt-8 mb-4 border-b border-white/10 pb-2 uppercase tracking-wide">{trimmed.replace("# ", "")}</h1>;
+        output.push(<h1 key={`h1-${idx}`} className="text-xl md:text-2xl font-syne font-bold text-white mt-8 mb-3 border-b border-white/10 pb-2">{parseInline(trimmed.slice(2), `h1-${idx}`)}</h1>);
+        return;
       }
       if (trimmed.startsWith("## ")) {
-        return <h2 key={idx} className="text-lg font-syne font-bold text-white mt-6 mb-3 border-b border-white/5 pb-1 uppercase tracking-wider">{trimmed.replace("## ", "")}</h2>;
+        output.push(<h2 key={`h2-${idx}`} className="text-lg font-syne font-bold text-white mt-6 mb-2 border-b border-white/5 pb-1">{parseInline(trimmed.slice(3), `h2-${idx}`)}</h2>);
+        return;
       }
       if (trimmed.startsWith("### ")) {
-        return <h3 key={idx} className="text-base font-syne font-bold text-[#00F5D4] mt-5 mb-2">{trimmed.replace("### ", "")}</h3>;
+        output.push(<h3 key={`h3-${idx}`} className="text-base font-syne font-semibold text-[#00F5D4] mt-5 mb-2">{parseInline(trimmed.slice(4), `h3-${idx}`)}</h3>);
+        return;
+      }
+      if (trimmed.startsWith("#### ")) {
+        output.push(<h4 key={`h4-${idx}`} className="text-sm font-syne font-semibold text-white/80 mt-4 mb-1">{parseInline(trimmed.slice(5), `h4-${idx}`)}</h4>);
+        return;
       }
 
+      // List items
       if (trimmed.startsWith("- ") || trimmed.startsWith("* ")) {
-        return <li key={idx} className="text-[#94A3B8] text-xs md:text-sm ml-6 list-disc mb-1.5">{trimmed.substring(2)}</li>;
+        output.push(<li key={`li-${idx}`} className="text-[#94A3B8] text-sm ml-5 list-disc mb-1.5">{parseInline(trimmed.slice(2), `li-${idx}`)}</li>);
+        return;
+      }
+      if (/^\d+\. /.test(trimmed)) {
+        const content = trimmed.replace(/^\d+\. /, "");
+        output.push(<li key={`oli-${idx}`} className="text-[#94A3B8] text-sm ml-5 list-decimal mb-1.5">{parseInline(content, `oli-${idx}`)}</li>);
+        return;
       }
 
+      // Blockquote
       if (trimmed.startsWith("> ")) {
-        return <blockquote key={idx} className="border-l-2 border-[#00F5D4] bg-white/5 px-4 py-3 my-3 text-xs md:text-sm text-[#94A3B8] italic rounded-r-lg">{trimmed.substring(2)}</blockquote>;
+        output.push(<blockquote key={`bq-${idx}`} className="border-l-4 border-[#00F5D4] bg-white/5 px-4 py-2 my-3 text-sm text-[#94A3B8] italic rounded-r-lg">{parseInline(trimmed.slice(2), `bq-${idx}`)}</blockquote>);
+        return;
       }
 
-      if (trimmed === "") return <div key={idx} className="h-3" />;
+      // Empty line
+      if (trimmed === "") {
+        output.push(<div key={`sp-${idx}`} className="h-2" />);
+        return;
+      }
 
-      return <p key={idx} className="text-[#94A3B8] text-xs md:text-sm leading-relaxed mb-3">{line}</p>;
+      // Paragraph — inline parse handles badges/images/links
+      output.push(<p key={`p-${idx}`} className="text-[#94A3B8] text-sm leading-relaxed mb-2">{parseInline(line, `p-${idx}`)}</p>);
     });
+
+    return output;
   }
+
 
   const cardVariants: Variants = {
     hidden: { opacity: 0, y: 50 },
