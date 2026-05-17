@@ -36,7 +36,6 @@ export default function ProjectsBento() {
   const [loading, setLoading] = useState(true);
   const [activeLightbox, setActiveLightbox] = useState<ProjectState | null>(null);
   const [activeReadme, setActiveReadme] = useState<ProjectState | null>(null);
-  const [activeTab, setActiveTab] = useState<"gif" | "screenshots">("gif");
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
@@ -511,7 +510,6 @@ export default function ProjectsBento() {
                   whileHover={{ scale: 1.015, y: -4 }}
                   onClick={() => {
                     setActiveLightbox(project);
-                    setActiveTab("gif");
                     setCurrentImageIndex(0);
                   }}
                   className={`group relative rounded-2xl bg-[#0F1318]/90 backdrop-blur-md p-6 md:p-8 overflow-hidden transition-all duration-300 border border-white/5 hover:border-[#00F5D4]/40 shadow-2xl flex flex-col justify-between cursor-pointer ${bentoClasses}`}
@@ -623,78 +621,45 @@ export default function ProjectsBento() {
             >
               {/* Media Section (Left/Top) */}
               <div className="w-full md:w-[65%] h-[240px] sm:h-[300px] md:h-full bg-black/60 relative flex flex-col justify-between p-4 border-b md:border-b-0 md:border-r border-white/5">
-                {/* Media Selector Tabs */}
-                <div className="flex gap-2 relative z-10">
-                  <button
-                    onClick={() => setActiveTab("gif")}
-                    className={`px-3 py-1.5 rounded-md text-[10px] uppercase tracking-widest font-mono font-bold border transition-all duration-300 ${
-                      activeTab === "gif"
-                        ? "bg-[#00F5D4] text-[#0B0F12] border-[#00F5D4] shadow-[0_0_10px_rgba(0,245,212,0.2)]"
-                        : "bg-white/5 text-white/50 border-white/5 hover:border-white/10 hover:text-white"
-                    }`}
-                  >
-                    Demo GIF
-                  </button>
-                  <button
-                    onClick={() => {
-                      setActiveTab("screenshots");
-                      setCurrentImageIndex(0);
-                    }}
-                    className={`px-3 py-1.5 rounded-md text-[10px] uppercase tracking-widest font-mono font-bold border transition-all duration-300 ${
-                      activeTab === "screenshots"
-                        ? "bg-[#00F5D4] text-[#0B0F12] border-[#00F5D4] shadow-[0_0_10px_rgba(0,245,212,0.2)]"
-                        : "bg-white/5 text-white/50 border-white/5 hover:border-white/10 hover:text-white"
-                    }`}
-                  >
-                    Screenshots
-                  </button>
-                </div>
-
                 {/* Media Render Screen */}
                 <div className="absolute inset-0 flex items-center justify-center overflow-hidden p-6">
-                  {activeTab === "gif" ? (
-                    <div className="relative w-full h-full rounded-xl overflow-hidden border border-white/10 shadow-lg">
-                      <img 
-                        src={activeLightbox.gifUrl} 
-                        alt="Project Demo GIF" 
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
-                  ) : (
-                    <div className="relative w-full h-full flex items-center justify-center">
-                      <img 
-                        src={activeLightbox.images[currentImageIndex]} 
-                        alt={`Screenshot ${currentImageIndex + 1}`} 
-                        className="w-full h-full object-contain rounded-xl border border-white/10 shadow-lg"
-                      />
+                  <div className="relative w-full h-full flex items-center justify-center">
+                    <img 
+                      src={activeLightbox.images[currentImageIndex]} 
+                      alt={`Screenshot ${currentImageIndex + 1}`} 
+                      className="w-full h-full object-contain rounded-xl border border-white/10 shadow-lg"
+                    />
 
-                      {/* Navigation Controls */}
-                      <button
-                        onClick={() => setCurrentImageIndex((prev) => (prev > 0 ? prev - 1 : activeLightbox.images.length - 1))}
-                        className="absolute left-3 p-1.5 rounded-lg bg-black/75 border border-white/10 hover:border-[#00F5D4] text-white hover:text-[#00F5D4] transition-colors"
-                      >
-                        <ChevronLeft size={16} />
-                      </button>
-                      <button
-                        onClick={() => setCurrentImageIndex((prev) => (prev < activeLightbox.images.length - 1 ? prev + 1 : 0))}
-                        className="absolute right-3 p-1.5 rounded-lg bg-black/75 border border-white/10 hover:border-[#00F5D4] text-white hover:text-[#00F5D4] transition-colors"
-                      >
-                        <ChevronRight size={16} />
-                      </button>
+                    {/* Navigation Controls - Only show if there is more than 1 image */}
+                    {activeLightbox.images.length > 1 && (
+                      <>
+                        <button
+                          onClick={() => setCurrentImageIndex((prev) => (prev > 0 ? prev - 1 : activeLightbox.images.length - 1))}
+                          className="absolute left-3 p-1.5 rounded-lg bg-black/75 border border-white/10 hover:border-[#00F5D4] text-white hover:text-[#00F5D4] transition-colors"
+                        >
+                          <ChevronLeft size={16} />
+                        </button>
+                        <button
+                          onClick={() => setCurrentImageIndex((prev) => (prev < activeLightbox.images.length - 1 ? prev + 1 : 0))}
+                          className="absolute right-3 p-1.5 rounded-lg bg-black/75 border border-white/10 hover:border-[#00F5D4] text-white hover:text-[#00F5D4] transition-colors"
+                        >
+                          <ChevronRight size={16} />
+                        </button>
 
-                      {/* Progress Dot Indicators */}
-                      <div className="absolute bottom-3 flex gap-1 z-10">
-                        {activeLightbox.images.map((_, idx) => (
-                          <div 
-                            key={idx}
-                            className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
-                              idx === currentImageIndex ? "bg-[#00F5D4] w-3.5" : "bg-white/25"
-                            }`}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                  )}
+                        {/* Progress Dot Indicators */}
+                        <div className="absolute bottom-3 flex gap-1 z-10">
+                          {activeLightbox.images.map((_, idx) => (
+                            <div 
+                              key={idx}
+                              className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+                                idx === currentImageIndex ? "bg-[#00F5D4] w-3.5" : "bg-white/25"
+                              }`}
+                            />
+                          ))}
+                        </div>
+                      </>
+                    )}
+                  </div>
                 </div>
               </div>
 
