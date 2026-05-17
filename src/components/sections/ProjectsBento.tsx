@@ -93,7 +93,7 @@ export default function ProjectsBento() {
 
       // Find which pattern occurs first in the string to parse it recursively
       const patterns = [
-        { regex: /<img\s+[^>]*src=["']([^"']+)["'][^>]*\/?>/, type: "html-img" },
+        { regex: /<img\s+[^>]*?src=["']([^"']+)["'][^>]*?\/?>/, type: "html-img" },
         { regex: /<br\s*\/?>/, type: "html-br" },
         { regex: /(\[!\[[^\]]*\]\([^)]+\)\]\([^)]+\))/, type: "linked-img" },
         { regex: /(!\[[^\]]*\]\([^)]+\))/, type: "md-img" },
