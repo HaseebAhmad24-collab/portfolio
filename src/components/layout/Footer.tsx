@@ -56,7 +56,7 @@ export default function Footer() {
           {[1, 2, 3, 4].map((i) => (
             <span 
               key={i} 
-              className="text-6xl md:text-9xl font-syne font-black uppercase text-transparent [-webkit-text-stroke:1px_rgba(255,255,255,0.1)] group-hover:[-webkit-text-stroke:1px_#00F5D4] transition-all duration-500"
+              className="text-3xl sm:text-5xl md:text-7xl font-syne font-black uppercase text-transparent [-webkit-text-stroke:1px_rgba(255,255,255,0.1)] group-hover:[-webkit-text-stroke:1px_#00F5D4] transition-all duration-500"
             >
               AVAILABLE FOR FREELANCE PROJECTS • LET'S TALK •&nbsp;
             </span>
