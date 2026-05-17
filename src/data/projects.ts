@@ -21,7 +21,7 @@ export const projectsConfig: ProjectConfig[] = [
       "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80", // Futuristic abstract mesh
       "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=800&q=80"
     ],
-    techStack: ["Next.js 14", "TypeScript", "Tailwind CSS", "Framer Motion"],
+    techStack: ["FastAPI", "React", "Docker", "SQLite", "Scikit-Learn", "RAG", "AI Assistant"],
     fallbackTitle: "AI-BusinessOperatingSystem",
     fallbackDescription: "Developed a full-stack system featuring Future Inventory Prediction models. Integrated an AI Assistant to automate customer support and business workflows."
   },
@@ -35,7 +35,7 @@ export const projectsConfig: ProjectConfig[] = [
       "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80", // Legal gavel premium image
       "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80"
     ],
-    techStack: ["Python", "Gemini API", "FastAPI", "Vector DB", "TypeScript"],
+    techStack: ["FastAPI", "React", "RAG", "Vector DB", "Gemini Api", "SQLite", "MIT License"],
     fallbackTitle: "JusticeBridge",
     fallbackDescription: "Currently building an agentic RAG system for Pakistani & Religious Law using Python & Gemini API. Implementing semantic search to retrieve accurate context from complex legal datasets."
   },
@@ -63,7 +63,7 @@ export const projectsConfig: ProjectConfig[] = [
       "https://images.unsplash.com/photo-1607799279861-4dd421887fb3?auto=format&fit=crop&w=800&q=80", // Tech code terminal
       "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80"
     ],
-    techStack: ["Docker", "Kubernetes", "Jenkins", "AWS EC2", "TypeScript"],
+    techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Supabase", "Google Gemini AI", "NextAuth.js", "GitHub OAuth"],
     fallbackTitle: "ReadMeAi",
     fallbackDescription: "An AI-powered SaaS platform that scans your GitHub repositories and generates professional, structured README files — ready to push in one click."
   }
