@@ -37,6 +37,25 @@ export default function ProjectsBento() {
   const [activeLightbox, setActiveLightbox] = useState<ProjectState | null>(null);
   const [activeReadme, setActiveReadme] = useState<ProjectState | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [toast, setToast] = useState<{ message: string; submessage: string } | null>(null);
+
+  const handleLiveClick = (e: React.MouseEvent<HTMLAnchorElement>, project: ProjectState) => {
+    if (project.id === "03") {
+      e.preventDefault();
+      e.stopPropagation();
+      setToast({
+        message: "AWS DEPLOYMENT IN PROGRESS ⚡",
+        submessage: "The complete system code, CI/CD pipelines, and database architecture are ready in our repository! The live public AWS environment is actively building and spinning up. Launching very soon!"
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (toast) {
+      const timer = setTimeout(() => setToast(null), 5500);
+      return () => clearTimeout(timer);
+    }
+  }, [toast]);
 
   useEffect(() => {
     async function loadProjectsData() {
@@ -588,7 +607,10 @@ export default function ProjectsBento() {
                       href={project.liveUrl}
                       target="_blank"
                       rel="noreferrer"
-                      onClick={(e) => e.stopPropagation()}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleLiveClick(e, project);
+                      }}
                       className="flex items-center justify-center gap-1.5 py-3 px-2 rounded-xl bg-[#00F5D4] text-[#0B0F12] hover:bg-white hover:shadow-[0_0_20px_rgba(0,245,212,0.3)] transition-all duration-300 font-syne font-bold text-xs uppercase tracking-wider group/btn"
                     >
                       <ExternalLink size={14} className="group-hover/btn:scale-110 transition-transform" />
@@ -731,6 +753,7 @@ export default function ProjectsBento() {
                     </a>
                     <a
                       href={activeLightbox.liveUrl}
+                      onClick={(e) => handleLiveClick(e, activeLightbox)}
                       target="_blank"
                       rel="noreferrer"
                       className="flex items-center justify-center gap-1.5 py-3.5 px-2 rounded-xl bg-[#00F5D4] text-[#0B0F12] hover:bg-white transition-all duration-300 font-syne font-bold text-xs uppercase tracking-wider"
@@ -788,6 +811,39 @@ export default function ProjectsBento() {
                 </article>
               </div>
             </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      {/* Toast Notification */}
+      <AnimatePresence>
+        {toast && (
+          <motion.div
+            initial={{ opacity: 0, y: 50, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.9 }}
+            transition={{ type: "spring", stiffness: 350, damping: 25 }}
+            className="fixed bottom-6 right-6 z-[100] max-w-sm w-full bg-[#0F1318]/95 border border-[#00F5D4]/30 rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(0,245,212,0.15)] backdrop-blur-md p-5 flex gap-4"
+          >
+            <div className="flex-shrink-0 flex items-start mt-0.5">
+              <span className="relative flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00F5D4] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-[#00F5D4]"></span>
+              </span>
+            </div>
+            <div className="flex flex-col gap-1 pr-4">
+              <h4 className="text-[#00F5D4] font-mono font-bold text-xs tracking-wider">
+                {toast.message}
+              </h4>
+              <p className="text-[#94A3B8] text-[11px] leading-relaxed mt-1">
+                {toast.submessage}
+              </p>
+            </div>
+            <button 
+              onClick={() => setToast(null)}
+              className="absolute top-3 right-3 text-white/40 hover:text-white/80 transition-colors"
+            >
+              <X size={12} />
+            </button>
           </motion.div>
         )}
       </AnimatePresence>

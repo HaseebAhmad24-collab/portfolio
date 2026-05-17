@@ -15,8 +15,11 @@ const syne = Syne({
 });
 
 export const metadata: Metadata = {
-  title: "Haseeb Ahmad | Digital Alchemist",
-  description: "Portfolio of Haseeb Ahmad, Aspiring AI Engineer.",
+  title: "Haseeb Ahmad | Full-Stack AI Developer",
+  description: "I'm Haseeb Ahmad — a Full-Stack AI Developer who transforms ideas into production-ready, AI-powered products that ship.",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
