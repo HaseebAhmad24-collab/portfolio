@@ -48,9 +48,7 @@ export default function ProjectsBento() {
           return {
             ...config,
             title: repoData?.name || config.fallbackTitle,
-            description: repoData?.description 
-              ? (repoData.description.length > 120 ? repoData.description.substring(0, 117) + "..." : repoData.description)
-              : config.fallbackDescription,
+            description: repoData?.description || config.fallbackDescription,
             readme: repoData?.readme || "README not found or empty."
           };
         });
