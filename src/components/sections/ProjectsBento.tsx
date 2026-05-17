@@ -156,10 +156,21 @@ export default function ProjectsBento() {
     let inCodeBlock = false;
     let codeLang = "";
     let codeLines: string[] = [];
+    let isCentered = false;
     const output: React.ReactNode[] = [];
 
     lines.forEach((line, idx) => {
       const trimmed = line.trim();
+
+      // HTML center tag detection
+      if (trimmed.startsWith('<div align="center">') || trimmed.startsWith('<div align=\'center\'>')) {
+        isCentered = true;
+        return;
+      }
+      if (trimmed.startsWith('</div>')) {
+        isCentered = false;
+        return;
+      }
 
       // Code block toggle
       if (trimmed.startsWith("```")) {
@@ -196,19 +207,23 @@ export default function ProjectsBento() {
 
       // Headings
       if (trimmed.startsWith("# ")) {
-        output.push(<h1 key={`h1-${idx}`} className="text-xl md:text-2xl font-syne font-bold text-white mt-8 mb-3 border-b border-white/10 pb-2">{parseInline(trimmed.slice(2), `h1-${idx}`)}</h1>);
+        const headingClass = `text-xl md:text-2xl font-syne font-bold text-white mt-8 mb-3 border-b border-white/10 pb-2 ${isCentered ? "text-center w-full" : ""}`;
+        output.push(<h1 key={`h1-${idx}`} className={headingClass}>{parseInline(trimmed.slice(2), `h1-${idx}`)}</h1>);
         return;
       }
       if (trimmed.startsWith("## ")) {
-        output.push(<h2 key={`h2-${idx}`} className="text-lg font-syne font-bold text-white mt-6 mb-2 border-b border-white/5 pb-1">{parseInline(trimmed.slice(3), `h2-${idx}`)}</h2>);
+        const headingClass = `text-lg font-syne font-bold text-white mt-6 mb-2 border-b border-white/5 pb-1 ${isCentered ? "text-center w-full" : ""}`;
+        output.push(<h2 key={`h2-${idx}`} className={headingClass}>{parseInline(trimmed.slice(3), `h2-${idx}`)}</h2>);
         return;
       }
       if (trimmed.startsWith("### ")) {
-        output.push(<h3 key={`h3-${idx}`} className="text-base font-syne font-semibold text-[#00F5D4] mt-5 mb-2">{parseInline(trimmed.slice(4), `h3-${idx}`)}</h3>);
+        const headingClass = `text-base font-syne font-semibold text-[#00F5D4] mt-5 mb-2 ${isCentered ? "text-center w-full" : ""}`;
+        output.push(<h3 key={`h3-${idx}`} className={headingClass}>{parseInline(trimmed.slice(4), `h3-${idx}`)}</h3>);
         return;
       }
       if (trimmed.startsWith("#### ")) {
-        output.push(<h4 key={`h4-${idx}`} className="text-sm font-syne font-semibold text-white/80 mt-4 mb-1">{parseInline(trimmed.slice(5), `h4-${idx}`)}</h4>);
+        const headingClass = `text-sm font-syne font-semibold text-white/80 mt-4 mb-1 ${isCentered ? "text-center w-full" : ""}`;
+        output.push(<h4 key={`h4-${idx}`} className={headingClass}>{parseInline(trimmed.slice(5), `h4-${idx}`)}</h4>);
         return;
       }
 
@@ -236,7 +251,24 @@ export default function ProjectsBento() {
       }
 
       // Paragraph — inline parse handles badges/images/links
-      output.push(<p key={`p-${idx}`} className="text-[#94A3B8] text-sm leading-relaxed mb-2">{parseInline(line, `p-${idx}`)}</p>);
+      if (isCentered) {
+        const isInlineContent = trimmed.startsWith("![") || trimmed.startsWith("[") || trimmed.includes("badge") || trimmed.includes("shields.io");
+        if (isInlineContent) {
+          output.push(
+            <div key={`p-${idx}`} className="text-center inline-flex justify-center items-center gap-1.5 mx-1 my-0.5">
+              {parseInline(line, `p-${idx}`)}
+            </div>
+          );
+        } else {
+          output.push(
+            <p key={`p-${idx}`} className="text-center text-[#94A3B8] text-sm leading-relaxed mb-2 w-full">
+              {parseInline(line, `p-${idx}`)}
+            </p>
+          );
+        }
+      } else {
+        output.push(<p key={`p-${idx}`} className="text-[#94A3B8] text-sm leading-relaxed mb-2">{parseInline(line, `p-${idx}`)}</p>);
+      }
     });
 
     return output;
