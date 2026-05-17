@@ -157,14 +157,8 @@ export default function ProjectsBento() {
           transition={{ duration: 0.6 }}
           className="mb-16"
         >
-          <div className="flex items-center gap-3 mb-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#00F5D4] animate-pulse" />
-            <p className="text-[#00F5D4] text-xs uppercase tracking-widest font-mono font-semibold">
-              // PRODUCTION REGISTRY
-            </p>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-syne font-bold text-white uppercase tracking-tight">
-            Featured Projects<span className="text-[#00F5D4]">.</span>
+          <h2 className="text-4xl md:text-5xl font-syne font-bold text-white border-l-4 border-[#00F5D4] pl-4 uppercase tracking-tight">
+            FEATURED PROJECTS
           </h2>
         </motion.div>
 
