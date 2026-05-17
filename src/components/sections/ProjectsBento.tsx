@@ -415,7 +415,7 @@ export default function ProjectsBento() {
                         {project.category}
                       </p>
                     </div>
-                    <h3 className="text-3xl font-syne font-bold text-white group-hover:text-[#00F5D4] transition-colors uppercase tracking-tight">
+                    <h3 className="text-3xl font-syne font-bold text-white group-hover:text-[#00F5D4] transition-colors tracking-tight">
                       {project.title}
                     </h3>
                     <p className="text-[#94A3B8] text-sm leading-relaxed mb-6">

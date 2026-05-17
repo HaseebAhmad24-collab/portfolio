@@ -56,8 +56,8 @@ export const projectsConfig: ProjectConfig[] = [
   {
     id: "04",
     category: "DEVOPS & INTEGRATION",
-    repoUrl: "https://github.com/HaseebAhmad24-collab/devops-fullstack",
-    liveUrl: "https://devops-fullstack.vercel.app",
+    repoUrl: "https://github.com/HaseebAhmad24-collab/ReadMeAi",
+    liveUrl: "https://read-me-ai-coral.vercel.app/",
     gifUrl: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3V2dG1hOTRpM2s4OHkyOTB2NXoxZ3Iwa3pvODN4Z285MXd2MWZoaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/a0h7sAqON67nO/giphy.gif",
     images: [
       "https://images.unsplash.com/photo-1607799279861-4dd421887fb3?auto=format&fit=crop&w=800&q=80", // Tech code terminal
