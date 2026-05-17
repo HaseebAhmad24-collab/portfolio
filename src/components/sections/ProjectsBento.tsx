@@ -163,7 +163,7 @@ export default function ProjectsBento() {
               // PRODUCTION REGISTRY
             </p>
           </div>
-          <h2 className="text-4xl md:text-6xl font-syne font-black text-white uppercase tracking-tight">
+          <h2 className="text-4xl md:text-5xl font-syne font-bold text-white uppercase tracking-tight">
             Featured Projects<span className="text-[#00F5D4]">.</span>
           </h2>
         </motion.div>
@@ -256,10 +256,10 @@ export default function ProjectsBento() {
                         {project.category}
                       </p>
                     </div>
-                    <h3 className="text-2xl md:text-3xl font-syne font-black text-white group-hover:text-[#00F5D4] transition-colors uppercase tracking-tight leading-none mt-1">
+                    <h3 className="text-3xl font-syne font-bold text-white group-hover:text-[#00F5D4] transition-colors uppercase tracking-tight">
                       {project.title}
                     </h3>
-                    <p className="text-[#94A3B8] text-xs md:text-sm leading-relaxed mb-5 line-clamp-3">
+                    <p className="text-[#94A3B8] text-sm leading-relaxed mb-6 line-clamp-3">
                       {project.description}
                     </p>
 
@@ -283,9 +283,9 @@ export default function ProjectsBento() {
                         e.stopPropagation();
                         setActiveReadme(project);
                       }}
-                      className="flex items-center justify-center gap-2 py-3 px-3 rounded-lg bg-white/5 border border-white/10 hover:border-[#00F5D4] hover:bg-[#00F5D4]/10 text-white hover:text-[#00F5D4] transition-all duration-300 font-mono text-xs uppercase tracking-wider group/btn hover:shadow-[0_0_15px_rgba(0,245,212,0.15)]"
+                      className="flex items-center justify-center gap-1.5 py-3 px-2 rounded-xl bg-white/5 border border-white/10 hover:border-[#00F5D4] hover:bg-[#00F5D4]/10 text-white hover:text-[#00F5D4] transition-all duration-300 font-syne font-bold text-xs uppercase tracking-wider group/btn hover:shadow-[0_0_15px_rgba(0,245,212,0.15)]"
                     >
-                      <FileText size={13} className="group-hover/btn:translate-y-[-1px] transition-transform" />
+                      <FileText size={14} className="group-hover/btn:scale-110 transition-transform" />
                       <span>README</span>
                     </button>
                     <a
@@ -293,9 +293,9 @@ export default function ProjectsBento() {
                       target="_blank"
                       rel="noreferrer"
                       onClick={(e) => e.stopPropagation()}
-                      className="flex items-center justify-center gap-2 py-3 px-3 rounded-lg bg-white/5 border border-white/10 hover:border-[#00F5D4] hover:bg-[#00F5D4]/10 text-white hover:text-[#00F5D4] transition-all duration-300 font-mono text-xs uppercase tracking-wider group/btn hover:shadow-[0_0_15px_rgba(0,245,212,0.15)]"
+                      className="flex items-center justify-center gap-1.5 py-3 px-2 rounded-xl bg-white/5 border border-white/10 hover:border-[#00F5D4] hover:bg-[#00F5D4]/10 text-white hover:text-[#00F5D4] transition-all duration-300 font-syne font-bold text-xs uppercase tracking-wider group/btn hover:shadow-[0_0_15px_rgba(0,245,212,0.15)]"
                     >
-                      <GithubIcon size={13} className="group-hover/btn:rotate-12 transition-transform" />
+                      <GithubIcon size={14} className="group-hover/btn:scale-110 transition-transform" />
                       <span>GitHub</span>
                     </a>
                     <a
@@ -303,10 +303,10 @@ export default function ProjectsBento() {
                       target="_blank"
                       rel="noreferrer"
                       onClick={(e) => e.stopPropagation()}
-                      className="flex items-center justify-center gap-2 py-3 px-3 rounded-lg bg-[#00F5D4] text-[#0B0F12] hover:bg-white hover:shadow-[0_0_20px_rgba(0,245,212,0.35)] transition-all duration-300 font-mono font-bold text-xs uppercase tracking-wider"
+                      className="flex items-center justify-center gap-1.5 py-3 px-2 rounded-xl bg-[#00F5D4] text-[#0B0F12] hover:bg-white hover:shadow-[0_0_20px_rgba(0,245,212,0.3)] transition-all duration-300 font-syne font-bold text-xs uppercase tracking-wider group/btn"
                     >
-                      <ExternalLink size={13} />
-                      <span>LIVE</span>
+                      <ExternalLink size={14} className="group-hover/btn:scale-110 transition-transform" />
+                      <span>Live</span>
                     </a>
                   </div>
                 </motion.div>
@@ -420,7 +420,7 @@ export default function ProjectsBento() {
                       <p className="text-[#00F5D4] text-[10px] md:text-xs uppercase tracking-widest font-mono font-bold">
                         // {activeLightbox.category}
                       </p>
-                      <h3 className="text-2xl md:text-3xl font-syne font-black text-white uppercase tracking-tight mt-1 leading-none">
+                      <h3 className="text-3xl font-syne font-bold text-white uppercase tracking-tight">
                         {activeLightbox.title}
                       </h3>
                     </div>
@@ -434,7 +434,7 @@ export default function ProjectsBento() {
                   </div>
 
                   {/* Description */}
-                  <p className="text-[#94A3B8] text-xs md:text-sm leading-relaxed my-1">
+                  <p className="text-[#94A3B8] text-sm leading-relaxed my-2">
                     {activeLightbox.description}
                   </p>
 
@@ -462,28 +462,28 @@ export default function ProjectsBento() {
                         setActiveReadme(activeLightbox);
                         setActiveLightbox(null);
                       }}
-                      className="flex items-center justify-center gap-1 py-3 px-1 rounded-lg bg-white/5 border border-white/10 hover:border-[#00F5D4] hover:bg-[#00F5D4]/10 text-white hover:text-[#00F5D4] transition-all duration-300 font-mono text-[10px] uppercase tracking-wider"
+                      className="flex items-center justify-center gap-1.5 py-3.5 px-2 rounded-xl bg-white/5 border border-white/10 hover:border-[#00F5D4] hover:bg-[#00F5D4]/10 text-white hover:text-[#00F5D4] transition-all duration-300 font-syne font-bold text-xs uppercase tracking-wider hover:shadow-[0_0_15px_rgba(0,245,212,0.15)]"
                     >
-                      <FileText size={12} />
+                      <FileText size={14} />
                       <span>README</span>
                     </button>
                     <a
                       href={activeLightbox.repoUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="flex items-center justify-center gap-1 py-3 px-1 rounded-lg bg-white/5 border border-white/10 hover:border-[#00F5D4] hover:bg-[#00F5D4]/10 text-white hover:text-[#00F5D4] transition-all duration-300 font-mono text-[10px] uppercase tracking-wider"
+                      className="flex items-center justify-center gap-1.5 py-3.5 px-2 rounded-xl bg-white/5 border border-white/10 hover:border-[#00F5D4] hover:bg-[#00F5D4]/10 text-white hover:text-[#00F5D4] transition-all duration-300 font-syne font-bold text-xs uppercase tracking-wider hover:shadow-[0_0_15px_rgba(0,245,212,0.15)]"
                     >
-                      <GithubIcon size={12} />
-                      <span>GITHUB</span>
+                      <GithubIcon size={14} />
+                      <span>GitHub</span>
                     </a>
                     <a
                       href={activeLightbox.liveUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="flex items-center justify-center gap-1 py-3 px-1 rounded-lg bg-[#00F5D4] text-[#0B0F12] hover:bg-white transition-all duration-300 font-mono font-bold text-[10px] uppercase tracking-wider shadow-[0_0_15px_rgba(0,245,212,0.2)]"
+                      className="flex items-center justify-center gap-1.5 py-3.5 px-2 rounded-xl bg-[#00F5D4] text-[#0B0F12] hover:bg-white transition-all duration-300 font-syne font-bold text-xs uppercase tracking-wider"
                     >
-                      <ExternalLink size={12} />
-                      <span>LIVE</span>
+                      <ExternalLink size={14} />
+                      <span>Live</span>
                     </a>
                   </div>
                 </div>
