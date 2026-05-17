@@ -29,10 +29,10 @@ export const projectsConfig: ProjectConfig[] = [
     id: "02",
     category: "AI LEGAL WORKSPACE",
     repoUrl: "https://github.com/HaseebAhmad24-collab/JusticeBridge",
-    liveUrl: "https://justicebridge.vercel.app",
+    liveUrl: "https://justice-bridge.vercel.app/",
     gifUrl: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3V2dG1hOTRpM2s4OHkyOTB2NXoxZ3Iwa3pvODN4Z285MXd2MWZoaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/a0h7sAqON67nO/giphy.gif", // Fallback looping gif if local is missing
     images: [
-      "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80", // Legal gavel premium image
+      "https://res.cloudinary.com/duagqeal6/image/upload/f_auto,q_auto/Screenshot_2026-05-17_180645_dvkzn6", // Legal gavel premium image
       "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80"
     ],
     techStack: ["FastAPI", "React", "RAG", "Vector DB", "Gemini Api", "SQLite", "MIT License"],
