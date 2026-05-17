@@ -16,54 +16,12 @@ export default function Navbar() {
     { name: "Contact", href: "#contact" },
   ];
 
-  const menuVariants = {
-    closed: {
-      opacity: 0,
-      y: "-100%",
-      transition: {
-        duration: 0.5,
-        ease: [0.76, 0, 0.24, 1],
-      },
-    },
-    opened: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        ease: [0.76, 0, 0.24, 1],
-      },
-    },
-  };
-
-  const navLinksVariants = {
-    closed: {},
-    opened: {
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  const linkVariants = {
-    closed: {
-      opacity: 0,
-      y: 30,
-      transition: { duration: 0.4, ease: "easeOut" },
-    },
-    opened: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.4, ease: "easeOut" },
-    },
-  };
-
   return (
     <>
-      <header className="fixed w-full top-0 z-40 backdrop-blur-md bg-[#0A0A0B]/80 border-b border-white/5">
+      <header className="fixed w-full top-0 z-45 backdrop-blur-md bg-[#0A0A0B]/80 border-b border-white/5">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           {/* Minimalist Logo */}
-          <Link href="/" className="font-syne font-bold text-2xl tracking-tighter z-50">
+          <Link href="/" className="font-syne font-bold text-2xl tracking-tighter">
             HASEEB<span className="text-[#00F5D4]">.</span>
           </Link>
           
@@ -95,7 +53,7 @@ export default function Navbar() {
           {/* Mobile Hamburger Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-white hover:text-[#00F5D4] transition-colors focus:outline-none z-50 p-2"
+            className="md:hidden text-white hover:text-[#00F5D4] transition-colors focus:outline-none p-2"
             aria-label="Toggle Menu"
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -103,32 +61,31 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* Mobile Fullscreen Menu Overlay */}
+      {/* Floating Mobile Dropdown Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial="closed"
-            animate="opened"
-            exit="closed"
-            variants={menuVariants}
-            className="fixed inset-0 w-full h-screen bg-[#0A0A0B]/98 backdrop-blur-lg z-30 flex flex-col justify-center items-center md:hidden"
+            initial={{ opacity: 0, scale: 0.95, y: -15 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: -15 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="fixed top-24 right-6 w-64 bg-[#0A0A0B]/90 backdrop-blur-xl border border-white/10 rounded-2xl p-6 shadow-[0_20px_50px_rgba(0,0,0,0.8)] z-40 md:hidden flex flex-col gap-4 origin-top-right"
           >
-            <motion.nav 
-              variants={navLinksVariants}
-              className="flex flex-col items-center gap-8"
-            >
-              {links.map((link) => (
-                <motion.div key={link.name} variants={linkVariants}>
-                  <Link
-                    href={link.href}
-                    onClick={() => setIsOpen(false)}
-                    className="font-syne font-bold text-4xl uppercase tracking-widest text-[#94A3B8] hover:text-[#00F5D4] transition-colors"
-                  >
-                    {link.name}
-                  </Link>
-                </motion.div>
+            <nav className="flex flex-col">
+              {links.map((link, index) => (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  onClick={() => setIsOpen(false)}
+                  className="font-syne font-bold text-base uppercase tracking-wider text-[#94A3B8] hover:text-[#00F5D4] transition-colors py-3 border-b border-white/5 last:border-0 flex items-center justify-between group"
+                >
+                  <span>{link.name}</span>
+                  <span className="text-xs font-mono opacity-0 group-hover:opacity-100 transition-opacity text-[#00F5D4] ml-2">
+                    // 0{index + 1}
+                  </span>
+                </Link>
               ))}
-            </motion.nav>
+            </nav>
           </motion.div>
         )}
       </AnimatePresence>
