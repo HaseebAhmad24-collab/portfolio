@@ -14,7 +14,7 @@ export const projectsConfig: ProjectConfig[] = [
   {
     id: "01",
     category: "AI & RAG SYSTEM",
-    repoUrl: "https://github.com/haseeb-vals/justicebridge",
+    repoUrl: "https://github.com/HaseebAhmad24-collab/JusticeBridge",
     liveUrl: "https://justicebridge.vercel.app",
     gifUrl: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3V2dG1hOTRpM2s4OHkyOTB2NXoxZ3Iwa3pvODN4Z285MXd2MWZoaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/a0h7sAqON67nO/giphy.gif", // Fallback looping gif if local is missing
     images: [
@@ -28,7 +28,7 @@ export const projectsConfig: ProjectConfig[] = [
   {
     id: "02",
     category: "AI INFRASTRUCTURE",
-    repoUrl: "https://github.com/haseeb-vals/ai-bos",
+    repoUrl: "https://github.com/HaseebAhmad24-collab/AI-BusinessOperatingSystem",
     liveUrl: "https://ai-bos.vercel.app",
     gifUrl: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z2dG1hOTRpM2s4OHkyOTB2NXoxZ3Iwa3pvODN4Z285MXd2MWZoaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/a0h7sAqON67nO/giphy.gif",
     images: [
@@ -42,7 +42,7 @@ export const projectsConfig: ProjectConfig[] = [
   {
     id: "03",
     category: "DEVOPS & INTEGRATION",
-    repoUrl: "https://github.com/haseeb-vals/devops-fullstack",
+    repoUrl: "https://github.com/HaseebAhmad24-collab/devops-fullstack",
     liveUrl: "https://devops-fullstack.vercel.app",
     gifUrl: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3V2dG1hOTRpM2s4OHkyOTB2NXoxZ3Iwa3pvODN4Z285MXd2MWZoaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/a0h7sAqON67nO/giphy.gif",
     images: [
