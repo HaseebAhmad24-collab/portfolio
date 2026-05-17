@@ -29,27 +29,63 @@ The portfolio is built using a modern, fast, and highly visual web development s
     *   Utilizes Next.js fetch caching (`next: { revalidate: 3600 }`) to cache responses for 1 hour to prevent GitHub rate-limiting.
     *   Safe fallback mechanism: If a repository returns a `404` or the API limit is hit, the UI gracefully falls back to pre-defined local data in `projects.ts`.
 
-### 📄 B. GitHub README Viewer & Advanced Custom Markdown Parser
-The portfolio implements a custom-built, lightweight **Markdown Compiler** that renders GitHub READMEs inside a modern full-screen glassmorphic lightbox modal. 
+### 🖼️ B. High-Fidelity Widescreen Screenshot Gallery (Replacing GIFs)
+*   **Clean Exhibition Area:** 
+    *   The legacy GIF tab toggle selectors have been completely deprecated and removed to provide a clean, high-performance visual experience.
+    *   Lightbox modals render a sleek, premium, widescreen **Screenshot Showcase Gallery** dedicated exclusively to displaying actual application interfaces.
+*   **Aspect Ratio Preservation:** 
+    *   Screenshots utilize **`object-contain`** within a high-fidelity laptop border canvas to guarantee images fit beautifully across various resolutions (specifically laptops) without any cropping.
+*   **CDN Optimization:** 
+    *   Configured with rich **Cloudinary CDN** hosting urls for optimized compression and ultra-fast visual loading times.
+*   **Smart Layout Purity:**
+    *   If a project contains **only 1 single screenshot**, the slider arrows (`<` / `>`) and bottom slider progress dots are **automatically hidden** to maintain a clean, distraction-free aesthetic.
+    *   If multiple screenshots exist, navigation arrows and dots are rendered with smooth spring transitions for easy swapping.
+
+### 🕹️ C. Dynamic Cyberpunk Follow-along Hover Tooltip (`CustomCursor.tsx`)
+*   **Interactive Hover Detect:**
+    *   Uses a global window listener hook in `CustomCursor` that listens to `mouseover` and `mouseout` events.
+    *   Detects elements containing the `data-hover-gallery="true"` attribute (configured on all project bento cards).
+*   **Sleek Neon Tooltip Badge:**
+    *   Upon hover, a custom floating neon-cyan badge **`LAUNCH SYSTEM GALLERY ✦`** is rendered with a smooth spring physics transition (`stiffness: 350, damping: 25`).
+    *   The badge organically tracks the mouse position with a slight pixel offset (`x: mousePosition.x + 20, y: mousePosition.y - 12`).
+*   **Cursor Pulse Animation:**
+    *   The central cursor dot dynamically scales up (`scale: 1.5`) while the outer lagging ring expands (`scale: 1.4`) and adopts a higher opacity (`opacity: 0.8`), reinforcing the futuristic feel.
+*   **Action Button Ignore Check:**
+    *   Features a built-in safety check: if the user hovers over interactive anchor tags (`a`) or buttons (`button`) inside the bento card (e.g. *README* or *GitHub* buttons), the gallery tooltip is **automatically hidden** to prevent visual clutter and maintain standard click accessibility.
+
+### 🔔 D. AWS Production Staging Toast Notification (`ProjectsBento.tsx`)
+*   **Telecom Project Intercept:**
+    *   Clicking on the **"Live"** button for the *Telecom Billing System* (id `"03"`) on both the main card and the lightbox gallery triggers a premium custom notification.
+*   **Glassmorphic Status Toast Overlay:**
+    *   Prevents standard redirect and instead slides a dark-glassmorphic status container in the bottom-right corner.
+    *   Features a pulsating live neon status indicator (`animate-ping`) mimicking a real-time AWS Cloud production server deployment sequences.
+*   **Custom Hacker Copy:**
+    *   **Title:** `AWS DEPLOYMENT IN PROGRESS ⚡`
+    *   **Message:** `The complete system code, CI/CD pipelines, and database architecture are ready in our repository! The live public AWS environment is actively building and spinning up. Launching very soon!`
+    *   Features a clean manual close button (`x`) and auto-fades out gracefully after **5.5 seconds**.
+
+### 📄 E. GitHub README Viewer & Advanced Custom Markdown Parser
+*   The portfolio implements a custom-built, lightweight **Markdown Compiler** that renders GitHub READMEs inside a modern full-screen glassmorphic lightbox modal. 
 *   **Plain Text Formatting:** Properly processes Headings (`#` through `####`), Blockquotes (`> `), horizontal rules (`---`), ordered lists (`1. item`), and unordered lists (`- item`).
 *   **Inline Tokenizer:** A regular expression-based inline compiler renders:
     *   **Linked Badges:** Automatically parses `[![Alt](imgUrl)](link)` (e.g. Shields.io badges) into fully styled, clickable inline badge elements.
     *   **Inline Code & Blocks:** Renders code segments in high-contrast cyan font pills (`#00F5D4`) and formats multi-line code blocks inside syntax-highlighted containers.
     *   **Links, Bold & Italic:** Converts Markdown brackets into Next-optimized links, `<strong>` tags, and styled italics.
 
-### 📊 C. Interactive Mermaid.js Diagram Engine (`MermaidDiagram.tsx`)
+### 📊 F. Interactive Mermaid.js Diagram Engine (`MermaidDiagram.tsx`)
 *   To render architectural diagrams included in project READMEs, a custom **Client-Side Mermaid Component** is used:
     *   **Dynamic Lazy Loading:** Imports `mermaid` dynamically (`await import("mermaid")`) only on the client side inside a React `useEffect` to prevent server-side rendering (SSR) hydration mismatches.
     *   **Theme Integration:** Automatically configures Mermaid initialization with a custom-styled dark theme, applying the portfolio's neon-cyan border and text colors to the generated SVG nodes.
     *   **Responsive Scaling:** Post-processes the rendered SVGs to be 100% responsive, adapting to mobile and desktop viewports smoothly.
 
-### 📱 D. Mobile Navigation & Dropdown Navigation (`Navbar.tsx`)
+### 📱 G. Mobile Navigation & Dropdown Navigation (`Navbar.tsx`)
 *   Replaced bulky, full-screen mobile menu overlays with an elegant, space-conscious **floating glassmorphic dropdown card** in the top-right corner.
 *   Uses Framer Motion for a smooth dropdown scale transition and integrates outside-click listener hooks for smooth user interaction.
 
-### ✉️ E. Silent AJAX Formspree Contact Form (`Footer.tsx`)
+### ✉️ H. Silent AJAX Formspree Contact Form (`Footer.tsx`)
 *   Integrates a fully custom AJAX form submission handler pointing to Formspree endpoint `https://formspree.io/f/mlgzqzvn`.
 *   Blocks standard Page Redirects on submit; payloads are formatted explicitly as stringified JSON (`JSON.stringify(data)`) with an explicit `Content-Type: application/json` header, bypassing the FormData CORS restriction of Formspree's free tier.
+*   **Freelancing Marquee Polish:** The text size of the contact title marquee has been slightly reduced, fully resolving mobile/tablet display overflows and ensuring the complete sentence stays 100% visible and responsive.
 
 ---
 
@@ -66,9 +102,29 @@ To maintain a uniform premium developer aesthetic across the page:
 
 ---
 
-## 📂 4. File Structure & Key Paths
+## 🌐 4. SEO, Metadata & Icon Assets
 
-*   [`src/components/sections/ProjectsBento.tsx`](file:///D:/Portfolio/portfolio/src/components/sections/ProjectsBento.tsx) — Bento Grid structure, lightboxes, and custom Markdown compiling engine.
+### 🖥️ A. Browser Tab & Title Configuration (`src/app/layout.tsx`)
+*   **Title Token:** Changed from `"Haseeb Ahmad | Digital Alchemist"` to **`"Haseeb Ahmad | Full-Stack AI Developer"`** to match professional full-stack expertise.
+*   **Meta Description:** Programmed to reflect the new, high-authority developer biography to improve click-through-rates in search engine queries.
+
+### 🌀 B. Custom Cybernetic SVG Favicon (`public/favicon.svg`)
+*   Replaced the default Next.js boilerplate icon with a vectorized **masterpiece cybernetic favicon logo**:
+    *   **Outer bezel:** Sleek circle structure glowing in `#00F5D4` border.
+    *   **Engineering subgrid lattice lines:** Rendered inside to give a blueprint feel.
+    *   **Interactive Monogram "H":** Sleek lines mapped to a beautiful neon gradient shifting from teal `#00F5D4` to deep purple `#7B2CBF` with soft glow filters.
+    *   **Neural Quantum Core:** A central pulsing node representing full-stack AI development.
+*   **Advantage:** SVG format guarantees 100% vector scalability with zero pixel degradation across all screen and bookmark resolutions!
+
+### 🔧 C. Hydration Mismatch Suppression (`src/app/layout.tsx`)
+*   Injected **`suppressHydrationWarning`** on both `<html>` and `<body>` tags. This ensures that third-party browser extensions (like ColorZilla or adblockers) that dynamically inject classes/attributes on layout load do not cause Next.js server-client mismatch warnings.
+
+---
+
+## 📂 5. File Structure & Key Paths
+
+*   [`src/components/sections/ProjectsBento.tsx`](file:///D:/Portfolio/portfolio/src/components/sections/ProjectsBento.tsx) — Bento Grid structure, screenshot lightboxes, and custom Markdown compiling engine.
+*   [`src/components/ui/CustomCursor.tsx`](file:///D:/Portfolio/portfolio/src/components/ui/CustomCursor.tsx) — Custom dynamic cursor with animated hover tooltip listeners.
 *   [`src/components/ui/MermaidDiagram.tsx`](file:///D:/Portfolio/portfolio/src/components/ui/MermaidDiagram.tsx) — High-fidelity rendering engine for Mermaid.js diagrams.
 *   [`src/data/projects.ts`](file:///D:/Portfolio/portfolio/src/data/projects.ts) — Projects repository source config containing verified GitHub repository URL references.
 *   [`src/lib/github.ts`](file:///D:/Portfolio/portfolio/src/lib/github.ts) — Standard API fetch calls, header token authorization, and parser utilities.
@@ -76,7 +132,7 @@ To maintain a uniform premium developer aesthetic across the page:
 
 ---
 
-## 💡 5. Troubleshooting & Future Updates Guide
+## 💡 6. Troubleshooting & Future Updates Guide
 
 ### Adding a New Project
 1.  Open [`src/data/projects.ts`](file:///D:/Portfolio/portfolio/src/data/projects.ts).
@@ -87,8 +143,7 @@ To maintain a uniform premium developer aesthetic across the page:
       category: "CATEGORY NAME",
       repoUrl: "https://github.com/HaseebAhmad24-collab/YOUR-REPO",
       liveUrl: "https://your-live-link.app",
-      gifUrl: "looping-preview-gif-link",
-      images: ["image-link-1", "image-link-2"],
+      images: ["image-link-1", "image-link-2"], // Cloudinary screenshots
       techStack: ["Tech1", "Tech2"],
       fallbackTitle: "Fallback Title",
       fallbackDescription: "Fallback Description"
